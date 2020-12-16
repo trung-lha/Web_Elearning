@@ -22,8 +22,10 @@ class SubjectController extends Controller
         $listSubject = DB::table('subject')
         ->select('subject.id','subject.name')->get();
         $examForSub =  DB::table('exam')
-        ->where('status', "active")
+        ->join('subject','exam.subject_id','=','subject.id')
+        ->where('exam.status', "active")
         ->where('exam.subject_id',$request->subject_id)
+        ->select('subject.id','subject.name as subjectName','exam.name as examName','exam.status','exam.subject_id')
         ->get();
         // dd($examForSub);
         return view('exams.exam', compact('examForSub','listSubject'));
