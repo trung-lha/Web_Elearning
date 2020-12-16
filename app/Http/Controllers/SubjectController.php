@@ -12,6 +12,11 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __contruct(){
+        $listSubject = DB::table('subject')
+        ->select('subject.id','subject.name')->get();
+        view()->share('listSubject', $listSubject);
+    }
     public function index(Request $request)
     {
         $listSubject = DB::table('subject')
@@ -21,7 +26,7 @@ class SubjectController extends Controller
         ->where('exam.subject_id',$request->subject_id)
         ->get();
         // dd($examForSub);
-        return view('exams.exam', compact('listSubject','examForSub'));
+        return view('exams.exam', compact('examForSub','listSubject'));
     }
 
     public function examDetail(Request $request){
@@ -30,7 +35,7 @@ class SubjectController extends Controller
         $listQuestions = DB::table('question')
         ->where('question.exam_id',$request->exam_id)
         ->get();
-        // dd($request->all());
+        // dd($listQuestions);
         return view('exams.examDetail', compact('listQuestions','listSubject'));
     }
     /**

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
 
 class QuestionTableSeeder extends Seeder
 {
@@ -11,84 +13,21 @@ class QuestionTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('question')->insert([
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 1, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 2, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
+        $faker =  Faker::create();
+        $question = [];
+        for($index = 0; $index < 250; $index ++){
+            $question[] = [
+                'exam_id' => rand(1,20),
+                'question' => $faker->text(30),
+                'answer_a' => $faker->sentence(10),
+                'answer_b' => $faker->sentence(10),
+                'answer_c' => $faker->sentence(10),
+                'answer_d' => $faker->sentence(10),
+                'correct_answer' => rand(1,4),
+            ];
 
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 3, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 4, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 5, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 4],
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 3],
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 2],
-            ['exam_id' => 6, 'question' => 'Question content', 'answer_a' => 'test', 'answer_b' => 'test', 'answer_c' => 'test', 'answer_d' => 'test', 'correct_answer' => 1],
-        ]);
+        }
+        // dd($question);
+        DB::table('question')->insert($question);
     }
 }

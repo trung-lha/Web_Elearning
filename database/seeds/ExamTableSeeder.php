@@ -15,10 +15,10 @@ class ExamTableSeeder extends Seeder
     {
         $faker =  Faker::create();
         $exam = [];
-        for($index = 0; $index < 100; $index ++){
+        for($index = 0; $index < 20; $index ++){
             $exam[] = [
                 'subject_id' => rand(1,6),
-                'name' => 'Bài thi thử '.$index,
+                'name' => 'Bài thi thử '.($index+1),
                 'status' => "active",
                 'thumb' => $faker->name()
             ];
