@@ -25,4 +25,4 @@ Route::prefix('subject')->group(function() {
     Route::get('/{subject_id}','SubjectController@index')->name('showSubject');
     Route::get('/{subject_id}/exam/{exam_id}','SubjectController@examDetail')->name('examDetail');
 });
-
+ Route::get('/admin','AdminController@showHomeAdmin')->name('homeAdmin');
