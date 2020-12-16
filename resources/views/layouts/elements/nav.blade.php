@@ -100,7 +100,7 @@
               <ul class="dropdown">
                 @if (Auth::user()->role_id == 1)
                     <li>
-                  <a href="exam.html">Admin</a>
+                  <a href="{{Route('homeAdmin')}}">Admin</a>
                  </li>
                 @endif
                 
