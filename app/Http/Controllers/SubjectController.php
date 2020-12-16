@@ -35,7 +35,7 @@ class SubjectController extends Controller
         $listQuestions = DB::table('question')
         ->where('question.exam_id',$request->exam_id)
         ->get();
-        dd($listQuestions);
+        // dd($listQuestions);
         return view('exams.examDetail', compact('listQuestions','listSubject'));
     }
     /**
