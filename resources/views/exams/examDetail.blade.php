@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('content')
 <aside id="colorlib-hero">
+	{{-- @dd($listSubject) --}}
 	<div class="flexslider">
 		<ul class="slides">
 			<li style="background-image: url({{asset('web_page/images/toanhoc.jpg')}});">
@@ -9,7 +10,7 @@
 					<div class="row">
 						<div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
 							<div class="slider-text-inner text-center">
-							<img src="" alt="">
+								<img src="" alt="">
 								<h1>ĐỀ 1</h1>
 								<h2>
 									<span>
@@ -34,42 +35,38 @@
 						<div class="classes class-single" style="border: 1px solid black">
 							<div class="desc desc2">
 								<form action="test.php" method="post">
-									<!-- Cau 1 -->
+									@foreach ($listQuestions as $key=>$question)
 									<input type="hidden" value="exam1">
-									<label for="ques1">Câu hỏi 1: </label><br>
-									<span>Tìm giá trị lớn nhất M và giá trị nhỏ nhất m của y = x
-										<sup>4</sup> - 2x
-										<sup>2</sup> + 3 tr&ecirc;n [0; 2] Lorem ipsum dolor sit amet consectetur
-										adipisicing elit. Perspiciatis odio quis eaque deleniti nam ipsam culpa. Illo
-										atque aliquam, quibusdam, voluptatem ex sint maiores tempore nisi ipsa minus
-										repellendus et!:
+									<label for="ques1">Câu hỏi {{$key+1}}: </label><br>
+									<span>
+										<strong>{{$question->question}}</strong>
 									</span><br>
-									&nbsp;&nbsp;<input name="ques1" type="radio" value="1" />&nbsp;&nbsp;A.
-									<span>M= 5, m = 2</span><br>
-									&nbsp;&nbsp;<input name="ques1" type="radio" value="2" />&nbsp;&nbsp;B.
-									<span>M= 5, m = 2</span><br>
-									&nbsp;&nbsp;<input name="ques1" type="radio" value="3" />&nbsp;&nbsp;C.
-									<span>M= 5, m = 2</span><br>
-									&nbsp;&nbsp;<input name="ques1" type="radio" value="4" />&nbsp;&nbsp;D.
-									<span>M= 5, m = 2</span><br><br>
-									<input type="submit" value="submit" class="btn btn-primary" onclick="myFunction()">
-									<!-- Cau 2 -->
+									&nbsp;&nbsp;<input name="{{'answer'.($key+1)}}" type="radio" value="1" />&nbsp;&nbsp;A.
+									<span>{{$question->answer_a}}</span><br>
+									&nbsp;&nbsp;<input name="{{'answer'.($key+1)}}" type="radio" value="2" />&nbsp;&nbsp;B.
+									<span>{{$question->answer_b}}</span><br>
+									&nbsp;&nbsp;<input name="{{'answer'.($key+1)}}" type="radio" value="3" />&nbsp;&nbsp;C.
+									<span>{{$question->answer_c}}</span><br>
+									&nbsp;&nbsp;<input name="{{'answer'.($key+1)}}" type="radio" value="4" />&nbsp;&nbsp;D.
+									<span>{{$question->answer_d}}</span><br><br>
 									
+									@endforeach
+									<input type="submit" value="submit" class="btn btn-primary" onclick="myFunction()">
 								</form>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3" style="background-color: red;">
-					<div>
-            <input type="button" value="Start" onclick="start()"/>
-            <input type="button" value="Stop" onclick="stop()"/>  <br/> <br/>
-        </div>
-         
-        <div>
-            <span id="h">Giờ</span> :
-            <span id="m">Phút</span> :
-            <span id="s">Giây</span>
-        </div>
+						<div>
+							<input type="button" value="Start" onclick="start()" />
+							<input type="button" value="Stop" onclick="stop()" /> <br /> <br />
+						</div>
+
+						<div>
+							<span id="h">Giờ</span> :
+							<span id="m">Phút</span> :
+							<span id="s">Giây</span>
+						</div>
 					</div>
 				</div>
 			</div>
