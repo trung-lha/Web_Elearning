@@ -34,14 +34,13 @@
 					<div class="col-md-9 animate-box">
 						<div class="classes class-single" style="border: 1px solid black">
 							<div class="desc desc2">
-								<form action="test.php" method="post">
+								<form action="" method="post">
 									@foreach ($listQuestions as $key=>$question)
 									<input type="hidden" value="exam1">
 									<label for="ques1">Câu hỏi {{$key+1}}: </label><br>
 									<span>
 										<strong>{{$question->question}}</strong>
 									</span><br>
-
 									&nbsp;&nbsp;<input name="{{'answer'.($key+1)}}" type="radio" value="1" />&nbsp;&nbsp;A.
 									<span>{{$question->answer_a}}</span><br>
 									&nbsp;&nbsp;<input name="{{'answer'.($key+1)}}" type="radio" value="2" />&nbsp;&nbsp;B.
@@ -50,7 +49,6 @@
 									<span>{{$question->answer_c}}</span><br>
 									&nbsp;&nbsp;<input name="{{'answer'.($key+1)}}" type="radio" value="4" />&nbsp;&nbsp;D.
 									<span>{{$question->answer_d}}</span><br><br>
-
 									
 									@endforeach
 									<input type="submit" value="submit" class="btn btn-primary" onclick="myFunction()">
@@ -58,83 +56,35 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3" style="background-color: red;">
-						<div>
-							<input type="button" value="Start" onclick="start()" />
-							<input type="button" value="Stop" onclick="stop()" /> <br /> <br />
-						</div>
+					
+					<div class="col-md-2" style="background-color: red; text-align: center">
+                        <span id="time" style="font-size: 40px; color : black;">90:00</span>
+                        <script>
+                            function startTimer(duration, display) {
+                                var timer = duration, minutes, seconds;
+                                // Countdown clock: 
+                                var timeInterval = setInterval( () => {
+                                    minutes = parseInt(timer / 60, 10)
+                                    seconds = parseInt(timer % 60, 10);
+                                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                                    seconds = seconds < 10 ? "0" + seconds : seconds;
+                                    $("#time").html(minutes + ":" + seconds);
+                                    timer--;
+                                }, 1000);
 
-						<div>
-							<span id="h">Giờ</span> :
-							<span id="m">Phút</span> :
-							<span id="s">Giây</span>
-						</div>
-
-					</div>
+                                };
+                            window.onload = function () {
+                                var timer = 60 * 90,
+                                display = document.querySelector('#time');
+                                startTimer(timer, display);
+                            };
+                        </script>
+                        
+                    </div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<script language="javascript">
- 
-	var h = 2; // Giờ
-	var m = 00; // Phút
-	var s = 00; // Giây
-	 
-	var timeout = null; // Timeout
-	 
-	function start()
-	{
-		if (h === null)
-{
-h = parseInt(document.getElementById('h_val').value);
-m = parseInt(document.getElementById('m_val').value);
-s = parseInt(document.getElementById('s_val').value);
-}
 
-/*BƯỚC 1: CHUYỂN ĐỔI DỮ LIỆU*/
-// Nếu số giây = -1 tức là đã chạy ngược hết số giây, lúc này:
-//  - giảm số phút xuống 1 đơn vị
-//  - thiết lập số giây lại 59
-if (s === -1){
-m -= 1;
-s = 59;
-}
-
-// Nếu số phút = -1 tức là đã chạy ngược hết số phút, lúc này:
-//  - giảm số giờ xuống 1 đơn vị
-//  - thiết lập số phút lại 59
-if (m === -1){
-h -= 1;
-m = 59;
-}
-
-// Nếu số giờ = -1 tức là đã hết giờ, lúc này:
-//  - Dừng chương trình
-if (h == -1){
-clearTimeout(timeout);
-alert('Hết giờ');
-return false;
-}
-
-/*BƯỚC 1: HIỂN THỊ ĐỒNG HỒ*/
-document.getElementById('h').innerText = h.toString();
-document.getElementById('m').innerText = m.toString();
-document.getElementById('s').innerText = s.toString();
-
-/*BƯỚC 1: GIẢM PHÚT XUỐNG 1 GIÂY VÀ GỌI LẠI SAU 1 GIÂY */
-timeout = setTimeout(function(){
-s--;
-start();
-}, 1000);
-}
-		// Code
-	
-	 
-	function stop(){
-		clearTimeout(timeout);
-	}
-</script>
 @endsection
-
