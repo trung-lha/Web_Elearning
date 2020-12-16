@@ -48,7 +48,7 @@
         <div class="col-md-10 text-right menu-1">
           <ul>
             <li class="active">
-              <a href="index.html">Trang chủ</a>
+              <a href="{{Route('home')}}">Trang chủ</a>
             </li>
             <li class="has-dropdown">
               <a style="cursor: default">Thi thử</a>
@@ -85,34 +85,45 @@
                 </li>
               </ul>
             </li>
-            <li>
+            {{-- <li>
               <a href="news.html">Bài viết mới</a>
             </li>
             <li>
               <a href="about.html">Về chúng tôi</a>
             </li>
-            <li><a href="contact.html">Liên hệ</a></li>
-            <li class="btn-cta">
-              <a href="auth/index.html">
-                <span>Đăng nhập</span>
-              </a>
-            </li>
-            <li class="has-dropdown">
+            <li><a href="contact.html">Liên hệ</a></li> --}}
+            @if (Auth::user())
+                <li class="has-dropdown">
               <a style="cursor: default">
                 <i class="fas fa-bars" style="font-size: 30px;"></i>
               </a>
               <ul class="dropdown">
-                <li>
+                @if (Auth::user()->role_id == 1)
+                    <li>
                   <a href="exam.html">Admin</a>
-                </li>
+                 </li>
+                @endif
+                
                 <li>
                   <a href="exam.html">Thông tin</a>
                 </li>
                 <li>
-                  <a href="exam.html">Đăng xuất</a>
+                <form action="{{route('logout')}}" method="POST">
+                {{csrf_field()}}
+                  <a><button type="submit">Đăng xuất</button></a>
+                </form>
+                  
                 </li>
               </ul>
             </li>
+            @else
+            <li class="btn-cta">
+              <a href="{{route('login')}}">
+                <span>Đăng nhập</span>
+              </a>
+            </li>
+            @endif
+            
           </ul>
         </div>
       </div>
