@@ -1,7 +1,6 @@
 @extends('layouts.main')
 @section('content')
-<aside id="colorlib-hero">
-	{{-- @dd($listSubject) --}}
+{{-- <aside id="colorlib-hero">
 	<div class="flexslider">
 		<ul class="slides">
 			<li style="background-image: url({{asset('web_page/images/toanhoc.jpg')}});">
@@ -24,7 +23,7 @@
 			</li>
 		</ul>
 	</div>
-</aside>
+</aside> --}}
 <div class="colorlib-classes">
 	<h2 class="col-md-offset-2">Bắt đầu làm bài thi</h2>
 	<div class="container">
