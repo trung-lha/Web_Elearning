@@ -13,7 +13,7 @@
 									{{-- <span class="price text-center"><small>Free</small></span> --}}
 								</div>
 								<div class="desc">
-									<h3><a href="exam_detail.html">{{$key->name}}</a></h3>
+									<h3><a href="{{Route('examDetail', [$key->subject_id,$key->id])}}">{{$key->name}}</a></h3>
 									<p>Pointing has no control about the blind texts it is an almost unorthographic life</p>
 									{{-- <p><i class="fa fa-eye"></i> 10</p> --}}
 								</div>

@@ -12,16 +12,25 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($subject_id)
+    public function index(Request $request)
     {
         $listSubject = DB::table('subject')
         ->select('subject.id','subject.name')->get();
         $examForSub =  DB::table('exam')
-        ->where('exam.subject_id',$subject_id)
-        ->select('exam.id','exam.name')->get();
+        ->where('status', "active")
+        ->where('exam.subject_id',$request->subject_id)
+        ->get();
+        // dd($examForSub);
         return view('exams.exam', compact('listSubject','examForSub'));
     }
 
+    public function examDetail(Request $request){
+        $listQuestions = DB::table('question')
+        ->where('question.exam_id',$request->exam_id)
+        ->get();
+        // dd($request->all());
+        return view('exams.examDetail', compact('listQuestions'));
+    }
     /**
      * Show the form for creating a new resource.
      *

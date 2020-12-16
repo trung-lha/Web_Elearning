@@ -20,4 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/subject/{subject_id}','SubjectController@index')->name('showSubject');
+Route::prefix('subject')->group(function() {
+    Route::get('/{subject_id}','SubjectController@index')->name('showSubject');
+    Route::get('/{subject_id}/exam/{exam_id}','SubjectController@examDetail')->name('examDetail');
+});
+

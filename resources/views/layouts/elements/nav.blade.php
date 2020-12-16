@@ -56,7 +56,7 @@
               
               @foreach ($listSubject as $key)
                   <li>
-                  <a href="{{URL::to('/subject/'.$key->id)}}">{{$key->name}}</a>
+                  <a href="{{Route('showSubject',$key->id)}}">{{$key->name}}</a>
                 </li>
               @endforeach
                 
