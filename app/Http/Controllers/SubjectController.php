@@ -25,11 +25,13 @@ class SubjectController extends Controller
     }
 
     public function examDetail(Request $request){
+        $listSubject = DB::table('subject')
+        ->select('subject.id','subject.name')->get();
         $listQuestions = DB::table('question')
         ->where('question.exam_id',$request->exam_id)
         ->get();
         // dd($request->all());
-        return view('exams.examDetail', compact('listQuestions'));
+        return view('exams.examDetail', compact('listQuestions','listSubject'));
     }
     /**
      * Show the form for creating a new resource.
