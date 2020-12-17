@@ -32,7 +32,7 @@
                                         <td width="10%">admin</td>
                                         <td>admin@gmail.com</td>
                                         <td>admin</td>
-                                        <td width="5%"><img src="img/img.jpg"
+                                        <td width="5%"><img src="{{asset('admin_page/img/img.jpg')}}"
                                                             alt="admin" class="zvn-thumb"></td>
                                         <td><a href="/change-status-active/1"
                                                type="button" class="btn btn-round btn-success">Active</a></td>
@@ -45,11 +45,11 @@
                                         </td>
                                         <td>
                                             <p><i class="fa fa-user"></i> admin</p>
-                                            <p><i class="fa fa-clock-o"></i> 10/12/2014</p>
+                                            <p><i class="fa fa-clock-o"></i> 15/12/2020</p>
                                         </td>
                                         <td>
                                             <p><i class="fa fa-user"></i> hailan</p>
-                                            <p><i class="fa fa-clock-o"></i> 10/12/2014</p>
+                                            <p><i class="fa fa-clock-o"></i> 15/12/2020</p>
                                         </td>
                                         <td class="last">
                                             <div class="zvn-box-btn-filter"><a
@@ -71,7 +71,7 @@
                                         <td width="10%">member</td>
                                         <td>member@gmail.com</td>
                                         <td>member</td>
-                                        <td width="5%"><img src="img/img.jpg"
+                                        <td width="5%"><img src="{{asset('admin_page/img/img.jpg')}}"
                                                             alt="hailan" class="zvn-thumb"></td>
                                         <td><a href="/change-status-active/2"
                                                type="button" class="btn btn-round btn-success">Active</a></td>
@@ -84,11 +84,11 @@
                                         </td>
                                         <td>
                                             <p><i class="fa fa-user"></i> admin</p>
-                                            <p><i class="fa fa-clock-o"></i> 13/12/2014</p>
+                                            <p><i class="fa fa-clock-o"></i> 15/12/2020</p>
                                         </td>
                                         <td>
                                             <p><i class="fa fa-user"></i> hailan</p>
-                                            <p><i class="fa fa-clock-o"></i> 13/12/2014</p>
+                                            <p><i class="fa fa-clock-o"></i> 15/12/2020</p>
                                         </td>
                                         <td class="last">
                                             <div class="zvn-box-btn-filter"><a
