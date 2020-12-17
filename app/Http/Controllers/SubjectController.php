@@ -22,8 +22,10 @@ class SubjectController extends Controller
         $listSubject = DB::table('subject')
         ->select('subject.id','subject.name')->get();
         $examForSub =  DB::table('exam')
-        ->where('status', "active")
+        ->join('subject','exam.subject_id','=','subject.id')
+        ->where('exam.status', "active")
         ->where('exam.subject_id',$request->subject_id)
+        ->select('subject.id','subject.name as subjectName','exam.name as examName','exam.status','exam.subject_id')
         ->get();
         // dd($examForSub);
         return view('exams.exam', compact('examForSub','listSubject'));
@@ -37,6 +39,30 @@ class SubjectController extends Controller
         ->get();
         // dd($listQuestions);
         return view('exams.examDetail', compact('listQuestions','listSubject'));
+    }
+
+    public function showPost(Request $request){
+        $listSubject = DB::table('subject')
+        ->select('subject.id','subject.name')->get();
+        $listPost =  DB::table('post')
+        ->join('subject','post.subject_id','=','subject.id')
+        ->where('post.status', "active")
+        ->where('post.subject_id',$request->subject_id)
+        ->select('post.id','subject.name as subjectName','post.name as postName','post.status','post.subject_id','post.content')
+        ->get();
+        // dd($listPost);
+        return view('post.showListPost', compact('listPost','listSubject'));
+    }
+
+    public function postDetail(Request $request){
+        $listSubject = DB::table('subject')
+        ->select('subject.id','subject.name')->get();
+
+        $post = DB::table('post')
+        ->where('post.id',$request->post_id)
+        ->get();
+
+        return view('post.postDetail', compact('post','listSubject'));
     }
     /**
      * Show the form for creating a new resource.

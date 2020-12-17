@@ -65,24 +65,11 @@
             <li class="has-dropdown">
               <a style="cursor: default">Học tập</a>
               <ul class="dropdown">
-                <li>
-                  <a href="exam.html">Toán học</a>
+                @foreach ($listSubject as $key)
+                  <li>
+                  <a href="{{Route('showPost',$key->id)}}">{{$key->name}}</a>
                 </li>
-                <li>
-                  <a href="exam.html">Vật Lý</a>
-                </li>
-                <li>
-                  <a href="exam.html">Hoá Học</a>
-                </li>
-                <li>
-                  <a href="exam.html">Sinh Học</a>
-                </li>
-                <li>
-                  <a href="exam.html">Anh Văn</a>
-                </li>
-                <li>
-                  <a href="exam.html">Công Dân</a>
-                </li>
+              @endforeach
               </ul>
             </li>
             {{-- <li>
@@ -105,7 +92,7 @@
                 @endif
                 
                 <li>
-                  <a href="exam.html">Thông tin</a>
+                  <a href="{{Route('showInfo')}}">Thông tin</a>
                 </li>
                 <li>
                 <form action="{{route('logout')}}" method="POST">
@@ -128,5 +115,6 @@
         </div>
       </div>
     </div>
+    
   </div>
 </nav>

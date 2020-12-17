@@ -63,6 +63,31 @@
     <div id="colorlib-intro">
 			<div class="container">
 				<div class="row">
+					<div class="col-md-4 intro-wrap">
+						<div class="intro-flex">
+							<div class="one-third color-2 animate-box">
+								<span class="icon">
+									<i class="flaticon-open-book"></i>
+								</span>
+								<div class="desc">
+									<h3>
+										<p>Học Tập</p>
+									</h3>
+								</div>
+							</div>
+							<div class="one-third color-1 animate-box">
+								<span class="icon">
+									<i class="flaticon-market"></i>
+								</span>
+								<div class="desc">
+									<h3>
+										<p>Thi Thử</p>
+									</h3>
+
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="col-md-8">
 						<div class="about-desc animate-box">
 							<h2>Website dành cho học sinh lớp 12</h2>
@@ -123,11 +148,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="colorlib-trainers">
+			{{-- <div class="colorlib-trainers">
 				<div class="container">
 					
 				</div>
-			</div>
+			</div> --}}
 
 			<div id="colorlib-subscribe" class="subs-img" style="background-image: url(images/img_bg_2.jpg);"
 				data-stellar-background-ratio="0.5">

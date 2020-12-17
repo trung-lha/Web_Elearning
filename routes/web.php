@@ -21,8 +21,14 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::prefix('subject')->group(function() {
-    Route::get('/{subject_id}','SubjectController@index')->name('showSubject');
-    Route::get('/{subject_id}/exam/{exam_id}','SubjectController@examDetail')->name('examDetail');
+Route::prefix('users')->group(function() {
+    Route::get('/subject/{subject_id}','SubjectController@index')->name('showSubject');
+    Route::get('/subject/{subject_id}/exam/{exam_id}','SubjectController@examDetail')->middleware('UserRole')->name('examDetail');
+    Route::get('/info','HomeController@showInfo')->middleware('UserRole')->name('showInfo');
+    Route::get('/subject/{subject_id}/post','SubjectController@showPost')->name('showPost');
+    Route::get('/subject/{subject_id}/post/{post_id}','SubjectController@postDetail')->name('postDetail');
 });
- Route::get('/admin','AdminController@showHomeAdmin')->name('homeAdmin');
+Route::prefix('admin')->group(function(){
+    Route::get('/','AdminController@showHomeAdmin')->middleware('AdminRole')->name('homeAdmin');
+});
+
