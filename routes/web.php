@@ -1,7 +1,6 @@
 <?php
-
+// namespace App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,9 +29,13 @@ Route::prefix('users')->group(function() {
 });
 Route::prefix('admin')->group(function(){
     Route::get('/','AdminController@showHomeAdmin')->middleware('AdminRole')->name('homeAdmin');
-    Route::get('/subject','AdminController@subjectAdmin')->name('subjectAdmin');
+    Route::get('/subject','SubjectAdminController@subjectAdmin')->name('subjectAdmin');
     Route::get('/user','AdminController@userAdmin')->name('userAdmin');
     Route::get('/post','AdminController@postAdmin')->name('postAdmin');
     Route::get('/exam','AdminController@examAdmin')->name('examAdmin');
+    Route::get('/subject/{subject_id}/detail','SubjectAdminController@subjectDetail')->name('subjectDetail');
+    Route::get('/subject/delete/{subject_id}','SubjectAdminController@subjectDelete')->name('subjectDelete');
+    Route::post('/subject','SubjectAdminController@subjectEdit')->name('subjectEdit');
+    Route::post('/subject/add-new','SubjectAdminController@subjectAdd')->name('subjectAdd');
 });
 

@@ -14,19 +14,7 @@ class AdminController extends Controller
         return view('admin.adminHome', compact('infoAdmin'));
     }
 
-    public function subjectAdmin(){
-        $infoAdmin = DB::table('users')
-        ->where('users.id',Auth::user()->id)
-        ->get();
-        return view('admin.subject.form',compact('infoAdmin'));
-    }
-
-    public function userAdmin(){
-        $infoAdmin = DB::table('users')
-        ->where('users.id',Auth::user()->id)
-        ->get();
-        return view('admin.users.form',compact('infoAdmin'));
-    }
+    
 
     public function postAdmin(){
         $infoAdmin = DB::table('users')
@@ -40,5 +28,12 @@ class AdminController extends Controller
         ->where('users.id',Auth::user()->id)
         ->get();
         return view('admin.exam.form',compact('infoAdmin'));
+    }
+
+    public function userAdmin(){
+        $infoAdmin = DB::table('users')
+        ->where('users.id',Auth::user()->id)
+        ->get();
+        return view('admin.users.form',compact('infoAdmin'));
     }
 }
