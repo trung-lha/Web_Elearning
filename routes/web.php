@@ -30,5 +30,9 @@ Route::prefix('users')->group(function() {
 });
 Route::prefix('admin')->group(function(){
     Route::get('/','AdminController@showHomeAdmin')->middleware('AdminRole')->name('homeAdmin');
+    Route::get('/subject','AdminController@subjectAdmin')->name('subjectAdmin');
+    Route::get('/user','AdminController@userAdmin')->name('userAdmin');
+    Route::get('/post','AdminController@postAdmin')->name('postAdmin');
+    Route::get('/exam','AdminController@examAdmin')->name('examAdmin');
 });
 
