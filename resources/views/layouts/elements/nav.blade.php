@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  <div class="top-menu">
+  <div class="top-menu" style="background-image:url({{asset('images/post/imageshead1.jpg')}})">
     <div class="container">
       <div class="row">
         <div class="col-md-2">
