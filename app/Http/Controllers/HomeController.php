@@ -25,7 +25,9 @@ class HomeController extends Controller
     public function index()
     {
         $listSubject = DB::table('subject')
-        ->select('subject.id','subject.name')->get();
+        ->select('subject.id','subject.name')
+        ->where('subject.status',"active")
+        ->get();
         return view('home')->with('listSubject',$listSubject);
     }
     public function showInfo(){
@@ -33,7 +35,9 @@ class HomeController extends Controller
         ->where('users.id',Auth::user()->id)
         ->get();
         $listSubject = DB::table('subject')
-        ->select('subject.id','subject.name')->get();
+        ->select('subject.id','subject.name')
+        ->where('subject.status',"active")
+        ->get();
         return view('profile', compact('info','listSubject'));
     }
 }

@@ -14,13 +14,17 @@ class SubjectController extends Controller
      */
     public function __contruct(){
         $listSubject = DB::table('subject')
-        ->select('subject.id','subject.name')->get();
+        ->select('subject.id','subject.name')
+        ->where('subject.status',"active")
+        ->get();
         view()->share('listSubject', $listSubject);
     }
     public function index(Request $request)
     {
         $listSubject = DB::table('subject')
-        ->select('subject.id','subject.name')->get();
+        ->select('subject.id','subject.name')
+        ->where('subject.status',"active")
+        ->get();
         $examForSub =  DB::table('exam')
         ->join('subject','exam.subject_id','=','subject.id')
         ->where('exam.status', "active")
@@ -33,7 +37,9 @@ class SubjectController extends Controller
 
     public function examDetail(Request $request){
         $listSubject = DB::table('subject')
-        ->select('subject.id','subject.name')->get();
+        ->select('subject.id','subject.name')
+        ->where('subject.status',"active")
+        ->get();
         $listQuestions = DB::table('question')
         ->where('question.exam_id',$request->exam_id)
         ->get();
@@ -43,7 +49,9 @@ class SubjectController extends Controller
 
     public function showPost(Request $request){
         $listSubject = DB::table('subject')
-        ->select('subject.id','subject.name')->get();
+        ->select('subject.id','subject.name')
+        ->where('subject.status',"active")
+        ->get();
         $listPost =  DB::table('post')
         ->join('subject','post.subject_id','=','subject.id')
         ->where('post.status', "active")
@@ -56,77 +64,13 @@ class SubjectController extends Controller
 
     public function postDetail(Request $request){
         $listSubject = DB::table('subject')
-        ->select('subject.id','subject.name')->get();
-
+        ->select('subject.id','subject.name')
+        ->where('subject.status',"active")
+        ->get();
         $post = DB::table('post')
         ->where('post.id',$request->post_id)
         ->get();
 
         return view('post.postDetail', compact('post','listSubject'));
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    } 
 }

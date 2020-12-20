@@ -16,14 +16,14 @@
         </div>
         
         <div class="right_col" role="main">
-            
-            @include('admin.elements.filter')
             @yield('content')
-            @include('admin.elements.box-pagination')
         </div>
-        
+        <footer>
+            {{-- @include('admin/elements.footer') --}}
+        </footer>
     </div>
 </div>
 @include('admin.elements.script')
 </body>
 </html>
+
