@@ -29,13 +29,19 @@ Route::prefix('users')->group(function() {
 });
 Route::prefix('admin')->group(function(){
     Route::get('/','AdminController@showHomeAdmin')->middleware('AdminRole')->name('homeAdmin');
+    
     Route::get('/subject','SubjectAdminController@subjectAdmin')->name('subjectAdmin');
-    Route::get('/user','AdminController@userAdmin')->name('userAdmin');
-    Route::get('/post','AdminController@postAdmin')->name('postAdmin');
-    Route::get('/exam','AdminController@examAdmin')->name('examAdmin');
     Route::get('/subject/{subject_id}/detail','SubjectAdminController@subjectDetail')->name('subjectDetail');
     Route::get('/subject/delete/{subject_id}','SubjectAdminController@subjectDelete')->name('subjectDelete');
     Route::post('/subject','SubjectAdminController@subjectEdit')->name('subjectEdit');
     Route::post('/subject/add-new','SubjectAdminController@subjectAdd')->name('subjectAdd');
+
+    Route::get('/user','AdminController@userAdmin')->name('userAdmin');
+    // Route::post('/user/add-new','UserAdminController@addUser')->name('addUser');
+    Route::get('/user/{user_id}/detail','UserAdminController@userDetail')->name('userDetail');
+    Route::get('/user/delete/{user_id}','UserAdminController@deleteUser')->name('deleteUser');
+
+    Route::get('/post','AdminController@postAdmin')->name('postAdmin');
+    Route::get('/exam','AdminController@examAdmin')->name('examAdmin');
 });
 

@@ -56,6 +56,7 @@ class SubjectAdminController extends Controller
         $infoAdmin = DB::table('users')
         ->where('users.id',Auth::user()->id)
         ->get();
+        // dd($request->description);
         $newSubject = [
             'name' => $request->name,
             'description' => $request->description,

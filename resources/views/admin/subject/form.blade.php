@@ -1,12 +1,5 @@
 @extends('admin.adminHome')
 
-<?php
-    $numberSubject = 0;
-    foreach ($subjects as $key){
-        $numberSubject++;
-    }
-
-?>
 @section('content')
 <div class="page-header zvn-page-header clearfix">
     <div class="zvn-page-header-title">

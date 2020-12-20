@@ -14,8 +14,6 @@ class AdminController extends Controller
         return view('admin.adminHome', compact('infoAdmin'));
     }
 
-    
-
     public function postAdmin(){
         $infoAdmin = DB::table('users')
         ->where('users.id',Auth::user()->id)
@@ -34,6 +32,9 @@ class AdminController extends Controller
         $infoAdmin = DB::table('users')
         ->where('users.id',Auth::user()->id)
         ->get();
-        return view('admin.users.form',compact('infoAdmin'));
+        $users = DB::table('users')
+        ->paginate(10);
+        // dd($subjects);
+        return view('admin.users.form',compact('infoAdmin','users'));
     }
 }
