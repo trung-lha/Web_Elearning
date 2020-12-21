@@ -7,28 +7,28 @@
         </div>
         <div class="col-xs-6 col-md-push-2 text-right">
           <p>
-            <ul class="colorlib-social-icons">
-              <li>
-                <a href="#">
-                  <i class="icon-twitter"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="icon-facebook"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="icon-linkedin"></i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i class="icon-dribbble"></i>
-                </a>
-              </li>
-            </ul>
+          <ul class="colorlib-social-icons">
+            <li>
+              <a href="#">
+                <i class="icon-twitter"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="icon-facebook"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="icon-linkedin"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="icon-dribbble"></i>
+              </a>
+            </li>
+          </ul>
           </p>
           <!-- <p class="btn-apply">
             <a href="#">Apply Now</a>
@@ -53,23 +53,23 @@
             <li class="has-dropdown">
               <a style="cursor: default">Thi thử</a>
               <ul class="dropdown">
-              
-              @foreach ($listSubject as $key)
-                  <li>
+
+                @foreach ($listSubject as $key)
+                <li>
                   <a href="{{Route('showSubject',$key->id)}}">{{$key->name}}</a>
                 </li>
-              @endforeach
-                
+                @endforeach
+
               </ul>
             </li>
             <li class="has-dropdown">
               <a style="cursor: default">Học tập</a>
               <ul class="dropdown">
                 @foreach ($listSubject as $key)
-                  <li>
+                <li>
                   <a href="{{Route('showPost',$key->id)}}">{{$key->name}}</a>
                 </li>
-              @endforeach
+                @endforeach
               </ul>
             </li>
             {{-- <li>
@@ -80,26 +80,27 @@
             </li>
             <li><a href="contact.html">Liên hệ</a></li> --}}
             @if (Auth::user())
-                <li class="has-dropdown">
+            <li class="has-dropdown">
               <a style="cursor: default">
-                <i class="fas fa-bars" style="font-size: 30px;"></i>
+                {{-- <i class="fas fa-bars" style="font-size: 30px;"></i> --}}
+                <img src="{{asset('storage/images/'.Auth::user()->avatar)}}" alt="avatar" style="width: 35px; height: 35px; border-radius: 50%;">
               </a>
               <ul class="dropdown">
                 @if (Auth::user()->role_id == 1)
-                    <li>
-                  <a href="{{Route('homeAdmin')}}">Admin</a>
-                 </li>
-                @endif
-                
                 <li>
-                  <a href="{{Route('showInfo')}}">Thông tin</a>
+                  <a href="{{Route('homeAdmin')}}"><i class="fas fa-users-cog"></i>  Admin</a>
+                </li>
+                @endif
+
+                <li>
+                  <a href="{{Route('showInfo')}}"><i class="fa fa-info-circle"></i>  Thông tin</a>
                 </li>
                 <li>
-                <form action="{{route('logout')}}" method="POST">
-                {{csrf_field()}}
-                  <a><button type="submit">Đăng xuất</button></a>
-                </form>
-                  
+                  <form action="{{route('logout')}}" method="POST">
+                    {{csrf_field()}}
+                    <a><button type="submit"><i class="fa fa-sign-out-alt"></i>  Đăng xuất</button></a>
+                  </form>
+
                 </li>
               </ul>
             </li>
@@ -110,11 +111,11 @@
               </a>
             </li>
             @endif
-            
+
           </ul>
         </div>
       </div>
     </div>
-    
+
   </div>
 </nav>
