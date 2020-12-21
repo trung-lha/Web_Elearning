@@ -26,6 +26,7 @@ Route::prefix('users')->group(function() {
     Route::get('/info','HomeController@showInfo')->middleware('UserRole')->name('showInfo');
     Route::get('/subject/{subject_id}/post','SubjectController@showPost')->name('showPost');
     Route::get('/subject/{subject_id}/post/{post_id}','SubjectController@postDetail')->name('postDetail');
+    Route::post('info/edit','UserController@userEditInfo')->middleware('UserRole')->name('userEditInfo');
 });
 Route::prefix('admin')->group(function(){
     Route::get('/','AdminController@showHomeAdmin')->middleware('AdminRole')->name('homeAdmin');
@@ -42,6 +43,9 @@ Route::prefix('admin')->group(function(){
     Route::get('/user/delete/{user_id}','UserAdminController@deleteUser')->name('deleteUser');
 
     Route::get('/post','AdminController@postAdmin')->name('postAdmin');
+    Route::get('/post/{post_id}/detail','PostAdminController@showPostAdmin')->name('showPostAdmin');
+    
+
     Route::get('/exam','AdminController@examAdmin')->name('examAdmin');
 });
 

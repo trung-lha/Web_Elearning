@@ -70,6 +70,9 @@ class SubjectController extends Controller
         $post = DB::table('post')
         ->where('post.id',$request->post_id)
         ->get();
+        DB::table('post')
+        ->where('post.id',$request->post_id)
+        ->update(['viewed'=> ($post[0]->viewed +1)]);
 
         return view('post.postDetail', compact('post','listSubject'));
     } 

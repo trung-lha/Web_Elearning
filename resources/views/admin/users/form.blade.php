@@ -104,7 +104,7 @@
                             <td style="width: 25%;">
                                 Name:{{$user->name}}<br>Email:{{$user->email}}
                             </td>
-                            <td style="width: 20%;">{{$user->avatar}}</td>
+                            <td style="width: 20%;"><img src="{{asset('storage/images/'.$user->avatar)}}" alt="avatar" style="width: 60px; height: 60px;"></td>
                             <td style="width: 10%;">
                                 @if($user->role_id == 1)
                                     <strong>Admin</strong>
