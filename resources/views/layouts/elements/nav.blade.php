@@ -82,22 +82,23 @@
             @if (Auth::user())
             <li class="has-dropdown">
               <a style="cursor: default">
-                <i class="fas fa-bars" style="font-size: 30px;"></i>
+                {{-- <i class="fas fa-bars" style="font-size: 30px;"></i> --}}
+                <img src="{{asset('storage/images/'.Auth::user()->avatar)}}" alt="avatar" style="width: 35px; height: 35px; border-radius: 50%;">
               </a>
               <ul class="dropdown">
                 @if (Auth::user()->role_id == 1)
                 <li>
-                  <a href="{{Route('homeAdmin')}}">Admin</a>
+                  <a href="{{Route('homeAdmin')}}"><i class="fas fa-users-cog"></i>  Admin</a>
                 </li>
                 @endif
 
                 <li>
-                  <a href="{{Route('showInfo')}}">Thông tin</a>
+                  <a href="{{Route('showInfo')}}"><i class="fa fa-info-circle"></i>  Thông tin</a>
                 </li>
                 <li>
                   <form action="{{route('logout')}}" method="POST">
                     {{csrf_field()}}
-                    <a><button type="submit">Đăng xuất</button></a>
+                    <a><button type="submit"><i class="fa fa-sign-out-alt"></i>  Đăng xuất</button></a>
                   </form>
 
                 </li>

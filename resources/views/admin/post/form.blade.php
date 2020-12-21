@@ -108,10 +108,9 @@
                             <td style="width: 14%;">{{$post->created_at}}</td>
                             <td style="width: 14%;">{{$post->updated_at}}</td>
                             <td style="width: 14%;">
-                                <a href=""><button
-                                        class="btn btn-success">Sửa</button></a>
+                                <a href="{{Route('showPostAdmin',$post->id)}}"><button class="btn btn-success">Sửa</button></a>
                                 <a onclick="return confirm('Bạn có chắc muốn xóa bài viết này không?')"
-                                    href=""><button class="btn btn-dark">Xóa</button>
+                                    href="{{Route('postDelete',$post->id)}}"><button class="btn btn-dark">Xóa</button>
                                 </a>
                             </td>
                         </tr>

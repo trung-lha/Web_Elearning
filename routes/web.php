@@ -44,6 +44,8 @@ Route::prefix('admin')->group(function(){
 
     Route::get('/post','AdminController@postAdmin')->name('postAdmin');
     Route::get('/post/{post_id}/detail','PostAdminController@showPostAdmin')->name('showPostAdmin');
+    Route::post('/post/edit','PostAdminController@editPostAdmin')->name('editPostAdmin');
+    Route::get('/post/{post_id}/delelte','PostAdminController@postDelete')->name('postDelete');
     
 
     Route::get('/exam','AdminController@examAdmin')->name('examAdmin');

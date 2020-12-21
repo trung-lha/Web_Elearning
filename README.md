@@ -22,4 +22,4 @@ Xây dựng trang web học tập online. Cho phép học sinh thi thử online 
 
 - Thứ tự các đáp án trong câu hỏi có thể đảo được
 - Thông tin về các bài thi sẽ được lưu lại để người dùng xem lại bài làm của mình
-- Dưới các bài thi thử hiển thị số lượt người đã tham gia thi
+- Thêm phần comment vào dưới các bài viết cho người dùng
