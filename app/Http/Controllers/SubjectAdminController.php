@@ -5,41 +5,31 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\SubjectModel as SubjectModel;
 
 class SubjectAdminController extends Controller
 {
-    public function subjectAdmin(){
-        $infoAdmin = DB::table('users')
-        ->where('users.id',Auth::user()->id)
-        ->get();
+    public function subjectAdmin(){    
         $subjects = DB::table('subject')
         ->paginate(10);
-        // dd($subjects);
-        return view('admin.subject.form',compact('infoAdmin','subjects'));
+        return view('admin.subject.form',compact('subjects'));
     }
 
     public function subjectDetail(Request $request){
-        $infoAdmin = DB::table('users')
-        ->where('users.id',Auth::user()->id)
-        ->get();
+
         if($request->subject_id != 0){
-            $subjectForEdit =DB::table('subject')
-            ->where('subject.id',$request->subject_id)
-            ->get();
-            return view('admin.subject.editSubject', compact('infoAdmin','subjectForEdit'));
+            $subjectForEdit = SubjectModel::where('id',$request->subject_id)->get();
+            return view('admin.subject.editSubject', compact('subjectForEdit'));
         }
         else {
-            return view('admin.subject.addSubject', compact('infoAdmin'));
+            return view('admin.subject.addSubject');
         }
         
     }
 
     public function subjectEdit(Request $request){
-        $infoAdmin = DB::table('users')
-        ->where('users.id',Auth::user()->id)
-        ->get();
-        $dataUpdate = DB::table('subject')
-        ->where('subject.id',$request->subject_id)
+       
+        SubjectModel::where('id',$request->subject_id)
         ->update(['name' => $request->name,
                 'description' => $request->description,
                 'status' => $request->status,
@@ -53,10 +43,7 @@ class SubjectAdminController extends Controller
     }
     
     public function subjectAdd(Request $request){
-        $infoAdmin = DB::table('users')
-        ->where('users.id',Auth::user()->id)
-        ->get();
-        // dd($request->description);
+
         $newSubject = [
             'name' => $request->name,
             'description' => $request->description,

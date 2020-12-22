@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use App\Models\SubjectModel as SubjectModel;
+
 class HomeController extends Controller
 {
     /**
@@ -22,22 +24,13 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    private $model;
+
     public function index()
     {
-        $listSubject = DB::table('subject')
-        ->select('subject.id','subject.name')
-        ->where('subject.status',"active")
-        ->get();
-        return view('home')->with('listSubject',$listSubject);
+        return view('home');
     }
     public function showInfo(){
-        $info = DB::table('users')
-        ->where('users.id',Auth::user()->id)
-        ->get();
-        $listSubject = DB::table('subject')
-        ->select('subject.id','subject.name')
-        ->where('subject.status',"active")
-        ->get();
-        return view('profile', compact('info','listSubject'));
+        return view('profile');
     }
 }
