@@ -4,43 +4,34 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Database\Query\Builder;
+use App\Models\PostModel as PostModel;
+use App\Models\QuestionModel as QuestionModel;
 
 class AdminController extends Controller
 {
     public function showHomeAdmin(){
-        $infoAdmin = DB::table('users')
-        ->where('users.id',Auth::user()->id)
-        ->get();
-        return view('admin.adminHome', compact('infoAdmin'));
+        return view('admin.adminHome');
     }
 
     public function postAdmin(){
-        $infoAdmin = DB::table('users')
-        ->where('users.id',Auth::user()->id)
-        ->get();
-        $listPosts = DB::table('post')
-        ->join('subject','post.subject_id','=','subject.id')
-        ->select('post.id as id', 'post.content as content','post.name as postName','subject.name as subName',
-        'post.status as status','post.viewed as viewed','post.created_at as created_at','post.updated_at as updated_at')
-        ->paginate(10);
+        $post = new PostModel();
+        $listPosts = $post->getPostForAdmin();
 
-        return view('admin.post.form',compact('infoAdmin','listPosts'));
+        return view('admin.post.form',compact('listPosts'));
     }
 
     public function examAdmin(){
-        $infoAdmin = DB::table('users')
-        ->where('users.id',Auth::user()->id)
-        ->get();
-        return view('admin.exam.form',compact('infoAdmin'));
+        
+        $ques = new QuestionModel();
+        $listQuestions = $ques->getQuestionForAdmin();
+        
+        return view('admin.exam.form',compact('listQuestions'));
     }
 
     public function userAdmin(){
-        $infoAdmin = DB::table('users')
-        ->where('users.id',Auth::user()->id)
-        ->get();
         $users = DB::table('users')
         ->paginate(10);
-        // dd($subjects);
-        return view('admin.users.form',compact('infoAdmin','users'));
+        return view('admin.users.form',compact('users'));
     }
 }

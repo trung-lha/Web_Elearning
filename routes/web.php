@@ -1,6 +1,9 @@
 <?php
 // namespace App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Models\SubjectModel as SubjectModel;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +20,20 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+View::composer(['admin/*','exams/*','layouts/*','post/*','templates/*','home','welcome','profile'], function ($view) {
+    $subModel = new SubjectModel();
+    $listSubject = $subModel->getSubjectActive();
+    if(Auth::check()){
+        $info = DB::table('users')
+        ->where('users.id',Auth::user()->id)
+        ->get();
+        $view->with('listSubject',$listSubject)->with('info',$info);
+    } else{
+        $view->with('listSubject',$listSubject);
+    }
+    
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -49,5 +66,7 @@ Route::prefix('admin')->group(function(){
     
 
     Route::get('/exam','AdminController@examAdmin')->name('examAdmin');
+    Route::get('/question/{question_id}','ExamAdminController@showQuestion')->name('showQuestion');
+    Route::post('/question/edit','ExamAdminController@editQuestion')->name('editQuestion');
 });
 

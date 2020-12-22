@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-header zvn-page-header clearfix">
     <div class="zvn-page-header-title">
-        <h3>Posts Management</h3>
+        <h3>Exams Management</h3>
     </div>
     <div class="zvn-add-new pull-right">
         <a href="" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>
@@ -76,10 +76,9 @@
                     <thead>
                         <tr class="headings">
                             <th class="column-title">#</th>
-                            <th class="column-title">Tiêu đề</th>
-                            <th class="column-title">Nội dung</th>
-                            <th class="column-title">Trạng thái</th>
-                            <th class="column-title">Lượt xem</th>
+                            <th class="column-title">Câu hỏi</th>
+                            <th class="column-title">Bài thi</th>
+                            <th class="column-title">Môn học</th>
                             <th class="column-title">Khởi tạo</th>
                             <th class="column-title">Cập nhật</th>
                             <th class="column-title" style="text-align: center;">Hành động</th>
@@ -88,26 +87,25 @@
                     <tfoot>
                         <tr>
                             <th>#</th>
-                            <th>Tiêu đề</th>
-                            <th>Nội dung</th>
-                            <th>Trạng thái</th>
-                            <th>Lượt xem</th>
+                            <th>Câu hỏi</th>
+                            <th>Bài thi</th>
+                            <th>Môn học</th>
                             <th>Khởi tạo</th>
                             <th>Cập nhật</th>
                             <th style="text-align: center;">Hành động</th>
                         </tr>
                     </tfoot>
                     <tbody>
-                        @foreach ($listPosts as $key=>$post)
+                        @foreach ($listQuestions as $key=>$question)
                         <tr>
                             <td style="width: 2%;">{{$key+1}}</td>
-                            <td style="width: 8%;">{{$post->name}}</td>
-                            <td style="width: 40%;">{{$post->content}}</td>
-                            <td style="width: 11%;"><button class="btn btn-primary">{{$post->status}}</button></td>
-                            <td style="width: 13%;">{{$post->created_at}}</td>
-                            <td>{{$post->updated_at}}</td>
+                            <td style="width: 39%;">{{$question->question}}</td>
+                            <td style="width: 10%;">{{$question->exam_name}}</td>
+                            <td style="width: 10%;">{{$question->subject_name}}</td>
+                            <td style="width: 13%;">{{$question->created_at}}</td>
+                            <td style="width: 13%;">{{$question->updated_at}}</td>
                             <td style="width: 13%;">
-                                <a href=""><button
+                                <a href="{{Route('showQuestion',$question->id)}}"><button
                                         class="btn btn-success">Sửa</button></a>
                                 <a onclick="return confirm('Bạn có chắc muốn xóa bài viết này không?')"
                                     href=""><button class="btn btn-dark">Xóa</button>
@@ -120,7 +118,7 @@
             </div>
             <div class="row mt--60" style="text-align: center">
                 <div class="col-md-12">
-                    {{ $listPosts->links()}}
+                    {{ $listQuestions->links()}}
                 </div>
             </div>
         </div>
