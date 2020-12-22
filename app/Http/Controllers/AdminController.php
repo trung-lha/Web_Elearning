@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Database\Query\Builder;
 
 class AdminController extends Controller
 {
@@ -31,7 +32,14 @@ class AdminController extends Controller
         $infoAdmin = DB::table('users')
         ->where('users.id',Auth::user()->id)
         ->get();
-        return view('admin.exam.form',compact('infoAdmin'));
+        $listQuestions = DB::table('question')
+        ->join('exam','exam.id','=','question.exam_id')
+        ->join('subject','exam.subject_id','=','subject.id')
+        ->select('question.id as id','exam.id as exam_id','exam.name as exam_name','subject.id as subject_id','question.question','question.answer_b','question.answer_a','question.answer_c','question.answer_d','question.correct_answer','subject.name as subject_name','exam.status as status','question.created_at','question.updated_at')
+        ->orderBy('question.id')
+        ->paginate(20);
+        // dd($listQuestions);
+        return view('admin.exam.form',compact('infoAdmin','listQuestions'));
     }
 
     public function userAdmin(){
@@ -40,7 +48,6 @@ class AdminController extends Controller
         ->get();
         $users = DB::table('users')
         ->paginate(10);
-        // dd($subjects);
         return view('admin.users.form',compact('infoAdmin','users'));
     }
 }

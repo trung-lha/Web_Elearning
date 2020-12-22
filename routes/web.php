@@ -49,5 +49,7 @@ Route::prefix('admin')->group(function(){
     
 
     Route::get('/exam','AdminController@examAdmin')->name('examAdmin');
+    Route::get('/question/{question_id}','ExamAdminController@showQuestion')->name('showQuestion');
+    Route::post('/question/edit','ExamAdminController@editQuestion')->name('editQuestion');
 });
 
