@@ -41,6 +41,7 @@ Route::prefix('users')->group(function() {
     Route::get('/subject/{subject_id}','SubjectController@index')->name('showSubject');
     Route::get('/subject/{subject_id}/exam/{exam_id}','SubjectController@examDetail')->middleware('UserRole')->name('examDetail');
     Route::get('/info','HomeController@showInfo')->middleware('UserRole')->name('showInfo');
+    Route::get('/ajax','AjaxController@handleExam')->middleware('UserRole')->name("ajax");
     Route::get('/subject/{subject_id}/post','SubjectController@showPost')->name('showPost');
     Route::get('/subject/{subject_id}/post/{post_id}','SubjectController@postDetail')->name('postDetail');
     Route::post('info/edit','UserController@userEditInfo')->middleware('UserRole')->name('userEditInfo');
