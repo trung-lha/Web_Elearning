@@ -33,7 +33,7 @@
                         <div class="col-md-9 animate-box">
                             <div class="classes class-single" style="border: 1px solid black">
                                 <div class="desc desc2">
-                                    <form id="main-form" method="get" enctype="multipart/form-data" action="{{ route('ajax') }}">
+                                    <form id="main-form" method="get" enctype="multipart/form-data" action="{{ route('processExam') }}">
                                         <input type="hidden" value="exam1">
                                         @foreach ($listQuestions as $key => $question)
                                             <label for="{{ $key + 1 }}">Câu hỏi {{ $key + 1 }}: </label><br>
@@ -64,6 +64,7 @@
                             <span id="time" style="font-size: 40px; color : black;">90:00</span>
                             {{-- Handle Timer in clock --}}
                             <script>
+                                 
                                 function startTimer(duration, display) {
                                     var timer = duration,
                                         minutes, seconds;
@@ -98,7 +99,8 @@
                                         minutes = minutes < 10 ? "0" + minutes : minutes;
                                         seconds = seconds < 10 ? "0" + seconds : seconds;
                                         var result = minutes + ":" + seconds;
-                                        var idExam = "{{ $question->exam_id }}";
+                                        var idExam = "{{ $listQuestions[0]->exam_id }}";
+                                        console.log(idExam);
                                         swal({
                                                 title: "Bạn muốn nộp bài?",
                                                 icon: "warning",
@@ -109,7 +111,7 @@
                                                 if (willSubmit) {
                                                     // console.log($("#main-form").serializeArray());
                                                     $.ajax({
-                                                        url: "{{ route('ajax') }}",
+                                                        url: "{{ route('processExam') }}",
                                                         method: "get",
                                                         dataType: "Json",
                                                         data: {
@@ -118,12 +120,25 @@
                                                             arr: $("#main-form").serializeArray(),
                                                         },
                                                         success: function(result) {
-                                                            clearInterval(timeInterval);
-                                                            clearTimeout(timeout);
-                                                            $("#result").html(result.data.xhtml);
-                                                            console.log(result.data.xhtml);
+                                                            if($.isEmptyObject(result.error)){
+                                                                swal({
+                                                                    title: "Nộp bài thành công!",
+                                                                    text: "Xem kết quả cuối trang",
+                                                                    icon: "success",
+                                                                    button: "OK",
+                                                                });
+                                                                clearInterval(timeInterval);
+                                                                clearTimeout(timeout);
+                                                                $("#result").html(result.data.xhtml);
+                                                                console.log(result.data.saveResult);
+                                                            }else{
+                                                                swal(result.error, {
+                                                                    icon: "warning",
+                                                                });
+                                                            }
                                                         }
                                                     });
+                                                    
                                                 } else {
                                                     // swal("Your imaginary file is safe!");
                                                 }

@@ -17,7 +17,7 @@ class CreateTableSampleExam extends Migration
             $table->increments('id');
             $table->unsignedInteger('exam_id');
             $table->unsignedInteger('user_id');
-            $table->integer('mark')->nullable();
+            $table->double('mark')->nullable();
             $table->string('time', 255);
             $table->timestamps();
         });
