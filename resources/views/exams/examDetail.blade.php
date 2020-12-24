@@ -35,6 +35,7 @@
                                 <div class="desc desc2">
                                     <form id="main-form" method="get" enctype="multipart/form-data" action="{{ route('processExam') }}">
                                         <input type="hidden" value="exam1">
+                                        <?php $count = count($listQuestions); ?>
                                         @foreach ($listQuestions as $key => $question)
                                             <label for="{{ $key + 1 }}">Câu hỏi {{ $key + 1 }}: </label><br>
                                             <span>
@@ -54,13 +55,13 @@
                                             <span>{{ $question->answer_d }}</span><br><br>
 
                                         @endforeach
-                                        <button type="submit" class="btn btn-primary" id="btn-click">Submit</button>
+                                        <button type="submit" class="btn btn-primary" id="submitExam" >Submit</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-2" style="background-color: red; text-align: center">
+                        <div class="col-md-2" style="background-color: green; text-align: center">
                             <span id="time" style="font-size: 40px; color : black;">90:00</span>
                             {{-- Handle Timer in clock --}}
                             <script>
@@ -80,8 +81,6 @@
 
                                     // Set timeout: 
                                     var timeout = setTimeout(() => {
-                                        alert('TIME OUT!!!');
-                                        alert('Xem kết quả ở cuối trang!');
                                         clearInterval(timeInterval);
                                         var timeView = duration - timer - 1;
                                         minutes = parseInt(timeView / 60, 10);
@@ -89,10 +88,10 @@
                                         minutes = minutes < 10 ? "0" + minutes : minutes;
                                         seconds = seconds < 10 ? "0" + seconds : seconds;
                                         var result = minutes + ":" + seconds
-                                        var idExam = "{{ $listQuestions[0]->exam_id }}";
+                                       
                                     }, duration * 1000 + 1000);
 
-                                    $("#btn-click").click(function(e) {
+                                    $("#submitExam").click(function(e) {
                                         var timeView = duration - timer - 1;
                                         minutes = parseInt(timeView / 60, 10);
                                         seconds = parseInt(timeView % 60, 10);
@@ -100,7 +99,7 @@
                                         seconds = seconds < 10 ? "0" + seconds : seconds;
                                         var result = minutes + ":" + seconds;
                                         var idExam = "{{ $listQuestions[0]->exam_id }}";
-                                        console.log(idExam);
+                                        
                                         swal({
                                                 title: "Bạn muốn nộp bài?",
                                                 icon: "warning",
@@ -129,8 +128,9 @@
                                                                 });
                                                                 clearInterval(timeInterval);
                                                                 clearTimeout(timeout);
+                                                                document.getElementById("submitExam").disabled = true;
                                                                 $("#result").html(result.data.xhtml);
-                                                                console.log(result.data.saveResult);
+                                                                
                                                             }else{
                                                                 swal(result.error, {
                                                                     icon: "warning",

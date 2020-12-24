@@ -54,6 +54,20 @@ class ProcessExamController extends Controller
                 );
             }
             $table .= '</tr>';
+
+            $table2 = '<tr style="background-color: rgb(13, 69, 86); color: white">';
+            for($i = 1; $i <= $count; $i++){
+                $table2 .= \sprintf(
+                    '<td style="padding: 4px; width: 30px">%s</td>', $i
+                );
+            }
+            $table2 .= '</tr><tr>';
+            for($i = 1; $i <= $count; $i++){
+                $table2 .= sprintf(
+                    '<td style="padding: 4px; width: 30px">%s</td>',  $select[$select_answer[$i-1]]
+                );
+            }
+            $table2 .= '</tr>';
     
             $xhtml = sprintf(
                 '<div style="border-radius: 10px; border: black 1px solid;border-color: black;" class="col-md-8 col-md-offset-1">
@@ -68,9 +82,15 @@ class ProcessExamController extends Controller
                                 %s
                             </tbody>
                         </table>
+                        <p>Đáp đã chọn : </p>
+                        <table class="tableStyle" border="1">
+                            <tbody>
+                                %s
+                            </tbody>
+                        </table>
                     </div>
                     <p style="color: red;"></p>
-                </div>', Auth::user()->name, $mark, $data['time'], $table
+                </div>', Auth::user()->name, $mark, $data['time'], $table, $table2
             );
     
             $saveResult = [
