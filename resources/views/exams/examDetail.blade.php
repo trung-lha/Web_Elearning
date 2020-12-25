@@ -24,10 +24,19 @@
             </ul>
         </div>
     </aside> --}}
-    <div class="colorlib-classes">
-        <h2 class="col-md-offset-2">Bắt đầu làm bài thi</h2>
-        <div class="container">
-            <div class="row">
+    <div class="h2"style="height: 400px;">
+        <h1 style="height: 100px"></h1>
+            <span class="title" style="font-size: 75px; color: white">Let's go</span>
+      
+    </div>
+    <hr>
+    <div style="height: 120px;text-align: center" >
+    </div>
+    
+    <div style="background-image:url({{asset('images/post/capture4.jpg')}})" >
+        <div class="container" id="kh_bv">
+            <h2 style="margin-left:360px ">Bắt đầu làm bài thi</h2>
+            <div class="row" style="margin-bottom: 10px">
                 <div class="col-10 col-md-offset-1">
                     <div class="row row-pb-lg">
                         <div class="col-md-9 animate-box">
@@ -180,6 +189,23 @@
                 </div>
             </div>
         </div>
+    
+</div>
+<hr>
+<div>
+<h2 style="text-align: center">Các bài thi khác</h2>
+</div>
+<div class="container-fluid">
+    <div class="col-md-2"></div>
+<div class="col-md-8">
+    <div class="row">
+<img class="img_bh" src="{{asset('images/post/slider1.jpg')}}" alt="">
+Bài thi số 2
+</div>
+<br>
+<div class="row">
+    <img class="img_bh" src="{{asset('images/post/slider2.jpg')}}" alt="">
+    Bài thi số 3
     </div>
 <script>
     function checkLeave() {
@@ -189,4 +215,3 @@
 
 </script>
 @endsection
-
