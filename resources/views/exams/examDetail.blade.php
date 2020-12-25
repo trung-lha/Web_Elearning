@@ -32,7 +32,7 @@
                     <div class="row row-pb-lg">
                         <div class="col-md-9 animate-box">
                             <div class="classes class-single" style="border: 1px solid black">
-                                <div class="desc desc2">
+                                <div class="desc desc2" id="formQuestion">
                                     <form id="main-form" method="get" enctype="multipart/form-data" action="{{ route('processExam') }}">
                                         <input type="hidden" value="exam1">
                                         <?php $count = count($listQuestions); ?>
@@ -41,18 +41,18 @@
                                             <span>
                                                 <strong>{{ $question->question }}</strong>
                                             </span><br>
-                                            &nbsp;&nbsp;<input name="{{ 'question' . ($key + 1) }}" type="radio"
-                                                value="1" />&nbsp;&nbsp;A.
-                                            <span>{{ $question->answer_a }}</span><br>
-                                            &nbsp;&nbsp;<input name="{{ 'question' . ($key + 1) }}" type="radio"
-                                                value="2" />&nbsp;&nbsp;B.
-                                            <span>{{ $question->answer_b }}</span><br>
-                                            &nbsp;&nbsp;<input name="{{ 'question' . ($key + 1) }}" type="radio"
-                                                value="3" />&nbsp;&nbsp;C.
-                                            <span>{{ $question->answer_c }}</span><br>
-                                            &nbsp;&nbsp;<input name="{{ 'question' . ($key + 1) }}" type="radio"
-                                                value="4" />&nbsp;&nbsp;D.
-                                            <span>{{ $question->answer_d }}</span><br><br>
+                                            <input name="{{ 'question' . ($key + 1) }}" type="radio"
+                                                value="1" />
+                                            <span id="{{ 'question' . ($key + 1) . 1}}">  A. {{ $question->answer_a }}</span><br>
+                                            <input  name="{{ 'question' . ($key + 1) }}" type="radio"
+                                                value="2" />
+                                            <span id="{{ 'question' . ($key + 1) . 2}}">  B. {{ $question->answer_b }}</span><br>
+                                            <input  name="{{ 'question' . ($key + 1) }}" type="radio"
+                                                value="3" />
+                                            <span id="{{ 'question' . ($key + 1) . 3}}">  C. {{ $question->answer_c }}</span><br>
+                                            <input name="{{ 'question' . ($key + 1) }}" type="radio"
+                                                value="4" />
+                                            <span id="{{ 'question' . ($key + 1) . 4}}">  D. {{ $question->answer_d }}</span><br><br>
 
                                         @endforeach
                                         <button type="submit" class="btn btn-primary" id="submitExam" >Submit</button>
@@ -99,7 +99,6 @@
                                         seconds = seconds < 10 ? "0" + seconds : seconds;
                                         var result = minutes + ":" + seconds;
                                         var idExam = "{{ $listQuestions[0]->exam_id }}";
-                                        
                                         swal({
                                                 title: "Bạn muốn nộp bài?",
                                                 icon: "warning",
@@ -129,8 +128,28 @@
                                                                 clearInterval(timeInterval);
                                                                 clearTimeout(timeout);
                                                                 document.getElementById("submitExam").disabled = true;
+                                                                document.getElementById("formQuestion").disabled = true;
                                                                 $("#result").html(result.data.xhtml);
-                                                                
+
+                                                                // highlight form answer after submit
+                                                                var highLight = result.data.correct;
+                                                                var highLightTrue = result.data.selectedAnswer;
+                                                                for (var i=0;i<result.data.countSelected;i++){
+                                                                    highLight[i]['correct_answer'] = "question"+(i+1)+highLight[i]['correct_answer'];
+                                                                    highLightTrue[i] = "question"+(i+1)+highLightTrue[i];
+                                                                }
+                                                                for (var i=0;i<result.data.countSelected;i++){
+                                                                    console.log(highLight[i]['correct_answer']);
+                                                                   
+                                                                    if (highLightTrue[i] == highLight[i]['correct_answer']){
+                                                                        document.getElementById(highLight[i]['correct_answer']).style.color = "green";
+                                                                    } else {
+                                                                        document.getElementById(highLight[i]['correct_answer']).style.color = "red";
+                                                                    }
+                                                                    document.getElementsByName("question"+(i+1)).forEach((e) => {
+                                                                        e.disabled = true;
+                                                                    });
+                                                                }
                                                             }else{
                                                                 swal(result.error, {
                                                                     icon: "warning",
@@ -162,5 +181,12 @@
             </div>
         </div>
     </div>
+<script>
+    function checkLeave() {
+        var msg = "Bạn đang làm bài thi có chắc bạn muốn rời khỏi trang này";
+        return msg;
+    }
 
+</script>
 @endsection
+
