@@ -13,7 +13,7 @@ class PostModel extends Model
         ->join('subject','post.subject_id','=','subject.id')
         ->where('post.status', "active")
         ->where('post.subject_id',$sub_id)
-        ->select('post.id','subject.name as subjectName','post.name as postName','post.status','post.subject_id','post.content')
+        ->select('post.id','subject.name as subjectName','post.name as postName','post.status','post.subject_id','post.content','post.viewed')
         ->get();
 
         return $listPost;

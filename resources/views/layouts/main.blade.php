@@ -3,7 +3,7 @@
 
 @include('layouts.elements.head')
 
-<body>
+<body onbeforeunload="return checkLeave()">
 
 	<!-- <div class="colorlib-loader"></div> -->
 

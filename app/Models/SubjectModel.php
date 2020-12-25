@@ -21,7 +21,7 @@ class SubjectModel extends Model
         ->join('exam','exam.subject_id','=','subject.id')
         ->where('exam.status', "active")
         ->where('exam.subject_id',$subId)
-        ->select('subject.id','subject.name as subjectName','exam.name as examName','exam.status','exam.subject_id')
+        ->select('subject.id','subject.name as subjectName','exam.name as examName','exam.status','exam.subject_id','exam.viewed','exam.id as exam_id')
         ->get();
 
         return $examForSub;

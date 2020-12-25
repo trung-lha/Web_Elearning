@@ -41,38 +41,40 @@
                     <div class="row row-pb-lg">
                         <div class="col-md-9 animate-box">
                             <div class="classes class-single" style="border: 1px solid black">
-                                <div class="desc desc2">
-                                    <form id="main-form" method="get" enctype="multipart/form-data" action="{{ route('ajax') }}">
+                                <div class="desc desc2" id="formQuestion">
+                                    <form id="main-form" method="get" enctype="multipart/form-data" action="{{ route('processExam') }}">
                                         <input type="hidden" value="exam1">
+                                        <?php $count = count($listQuestions); ?>
                                         @foreach ($listQuestions as $key => $question)
                                             <label for="{{ $key + 1 }}">Câu hỏi {{ $key + 1 }}: </label><br>
                                             <span>
                                                 <strong>{{ $question->question }}</strong>
                                             </span><br>
-                                            &nbsp;&nbsp;<input name="{{ 'question' . ($key + 1) }}" type="radio"
-                                                value="1" />&nbsp;&nbsp;A.
-                                            <span>{{ $question->answer_a }}</span><br>
-                                            &nbsp;&nbsp;<input name="{{ 'question' . ($key + 1) }}" type="radio"
-                                                value="2" />&nbsp;&nbsp;B.
-                                            <span>{{ $question->answer_b }}</span><br>
-                                            &nbsp;&nbsp;<input name="{{ 'question' . ($key + 1) }}" type="radio"
-                                                value="3" />&nbsp;&nbsp;C.
-                                            <span>{{ $question->answer_c }}</span><br>
-                                            &nbsp;&nbsp;<input name="{{ 'question' . ($key + 1) }}" type="radio"
-                                                value="4" />&nbsp;&nbsp;D.
-                                            <span>{{ $question->answer_d }}</span><br><br>
+                                            <input name="{{ 'question' . ($key + 1) }}" type="radio"
+                                                value="1" />
+                                            <span id="{{ 'question' . ($key + 1) . 1}}">  A. {{ $question->answer_a }}</span><br>
+                                            <input  name="{{ 'question' . ($key + 1) }}" type="radio"
+                                                value="2" />
+                                            <span id="{{ 'question' . ($key + 1) . 2}}">  B. {{ $question->answer_b }}</span><br>
+                                            <input  name="{{ 'question' . ($key + 1) }}" type="radio"
+                                                value="3" />
+                                            <span id="{{ 'question' . ($key + 1) . 3}}">  C. {{ $question->answer_c }}</span><br>
+                                            <input name="{{ 'question' . ($key + 1) }}" type="radio"
+                                                value="4" />
+                                            <span id="{{ 'question' . ($key + 1) . 4}}">  D. {{ $question->answer_d }}</span><br><br>
 
                                         @endforeach
-                                        <button type="submit" class="btn btn-primary" id="btn-click">Submit</button>
+                                        <button type="submit" class="btn btn-primary" id="submitExam" >Submit</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-2" style="background-color: red; text-align: center">
+                        <div class="col-md-2" style="background-color: green; text-align: center">
                             <span id="time" style="font-size: 40px; color : black;">90:00</span>
                             {{-- Handle Timer in clock --}}
                             <script>
+                                 
                                 function startTimer(duration, display) {
                                     var timer = duration,
                                         minutes, seconds;
@@ -88,8 +90,6 @@
 
                                     // Set timeout: 
                                     var timeout = setTimeout(() => {
-                                        alert('TIME OUT!!!');
-                                        alert('Xem kết quả ở cuối trang!');
                                         clearInterval(timeInterval);
                                         var timeView = duration - timer - 1;
                                         minutes = parseInt(timeView / 60, 10);
@@ -97,17 +97,17 @@
                                         minutes = minutes < 10 ? "0" + minutes : minutes;
                                         seconds = seconds < 10 ? "0" + seconds : seconds;
                                         var result = minutes + ":" + seconds
-                                        var idExam = "{{ $listQuestions[0]->exam_id }}";
+                                       
                                     }, duration * 1000 + 1000);
 
-                                    $("#btn-click").click(function(e) {
+                                    $("#submitExam").click(function(e) {
                                         var timeView = duration - timer - 1;
                                         minutes = parseInt(timeView / 60, 10);
                                         seconds = parseInt(timeView % 60, 10);
                                         minutes = minutes < 10 ? "0" + minutes : minutes;
                                         seconds = seconds < 10 ? "0" + seconds : seconds;
                                         var result = minutes + ":" + seconds;
-                                        var idExam = "{{ $question->exam_id }}";
+                                        var idExam = "{{ $listQuestions[0]->exam_id }}";
                                         swal({
                                                 title: "Bạn muốn nộp bài?",
                                                 icon: "warning",
@@ -118,7 +118,7 @@
                                                 if (willSubmit) {
                                                     // console.log($("#main-form").serializeArray());
                                                     $.ajax({
-                                                        url: "{{ route('ajax') }}",
+                                                        url: "{{ route('processExam') }}",
                                                         method: "get",
                                                         dataType: "Json",
                                                         data: {
@@ -127,12 +127,46 @@
                                                             arr: $("#main-form").serializeArray(),
                                                         },
                                                         success: function(result) {
-                                                            clearInterval(timeInterval);
-                                                            clearTimeout(timeout);
-                                                            $("#result").html(result.data.xhtml);
-                                                            console.log(result.data.xhtml);
+                                                            if($.isEmptyObject(result.error)){
+                                                                swal({
+                                                                    title: "Nộp bài thành công!",
+                                                                    text: "Xem kết quả cuối trang",
+                                                                    icon: "success",
+                                                                    button: "OK",
+                                                                });
+                                                                clearInterval(timeInterval);
+                                                                clearTimeout(timeout);
+                                                                document.getElementById("submitExam").disabled = true;
+                                                                document.getElementById("formQuestion").disabled = true;
+                                                                $("#result").html(result.data.xhtml);
+
+                                                                // highlight form answer after submit
+                                                                var highLight = result.data.correct;
+                                                                var highLightTrue = result.data.selectedAnswer;
+                                                                for (var i=0;i<result.data.countSelected;i++){
+                                                                    highLight[i]['correct_answer'] = "question"+(i+1)+highLight[i]['correct_answer'];
+                                                                    highLightTrue[i] = "question"+(i+1)+highLightTrue[i];
+                                                                }
+                                                                for (var i=0;i<result.data.countSelected;i++){
+                                                                    console.log(highLight[i]['correct_answer']);
+                                                                   
+                                                                    if (highLightTrue[i] == highLight[i]['correct_answer']){
+                                                                        document.getElementById(highLight[i]['correct_answer']).style.color = "green";
+                                                                    } else {
+                                                                        document.getElementById(highLight[i]['correct_answer']).style.color = "red";
+                                                                    }
+                                                                    document.getElementsByName("question"+(i+1)).forEach((e) => {
+                                                                        e.disabled = true;
+                                                                    });
+                                                                }
+                                                            }else{
+                                                                swal(result.error, {
+                                                                    icon: "warning",
+                                                                });
+                                                            }
                                                         }
                                                     });
+                                                    
                                                 } else {
                                                     // swal("Your imaginary file is safe!");
                                                 }
@@ -173,32 +207,11 @@ Bài thi số 2
     <img class="img_bh" src="{{asset('images/post/slider2.jpg')}}" alt="">
     Bài thi số 3
     </div>
-    <br>
-    <div class="row">
-        <img class="img_bh" src="{{asset('images/post/slider3.jpg')}}" alt="">
-        Bài thi số 4
-        </div>
-</div>
-<div class="col-md-2"></div>
-</div>
+<script>
+    function checkLeave() {
+        var msg = "Bạn đang làm bài thi có chắc bạn muốn rời khỏi trang này";
+        return msg;
+    }
 
-    
+</script>
 @endsection
-<style>
-    .img_bh{
-        width: 350px;
-        object-fit: contain;
-    }
-    .h2{
-        background-image:url({{asset('images/post/capture.JPG')}});
-        text-align:center
-    }
-   
-    .colorlib-classes{
-        
-        margin-top: 0px;
-    }
-    #kh_bv{
-        background-color: white;
-    }
-</style>
