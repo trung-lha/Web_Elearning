@@ -1,8 +1,8 @@
 @extends('layouts.main')
 
 @section('content')
-<img src="{{asset('images/post/capture2.jpg')}}" alt="">
-<div id="colorlib-contact" style="background-color: #e6dddd">
+{{-- <img src="{{asset('images/post/capture2.jpg')}}" alt=""> --}}
+<div id="colorlib-contact">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10 col-md-offset-1 animate-box">
@@ -13,7 +13,7 @@
                     <h1 style="color:black">Thông tin cá nhân</h1>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-5" style="background-color: white">
+                    <div class="col-md-5">
                         <div style="text-align: center; margin-top: 10px">
                             <h3 style="color:rgb(7, 201, 201)">Ảnh đại diện</h3>
                         </div>
