@@ -65,7 +65,6 @@
                             <span id="time" style="font-size: 40px; color : black;">90:00</span>
                             {{-- Handle Timer in clock --}}
                             <script>
-                                 
                                 function startTimer(duration, display) {
                                     var timer = duration,
                                         minutes, seconds;
