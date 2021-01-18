@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+
 <?php $count = count($listQuestions); ?>
 <div class="col-md-3" style="position: sticky; top: 40px;right: 0" id="boxHighLight">
     <div class="row" >
@@ -16,12 +17,17 @@
         @endfor
     </div>
 </div>
+
     <div class="container" id="kh_bv">
+        <div style="height: 100px">
+            <img src="{{asset('images/exam/galweb-banner.jpg')}}" style="height: 100%;width: 100%; object-fit: none" alt="banner">
+            </div>
         <h2 style="margin-left:360px ">Bắt đầu làm bài thi</h2>
         <div class="row" style="margin-bottom: 40px" style="float: right">
             <div class="col-9 col-md-offset-1">
                 <div class="row row-pb-lg">
-                    <div class="col-md-9 animate-box">
+                    <div class="col-md-9 animate-box" style="margin-left: 17px">
+
                         <div class="classes class-single" style="border: 1px solid black">
                             <div class="desc desc2" id="formQuestion">
                                 <form id="main-form" method="get" enctype="multipart/form-data"
@@ -49,12 +55,16 @@
                             </div>
                         </div>
                     </div>  
+
                 </div>
-                <div class="row row-pb-lg" id="result" style="width: 100%">
-                </div>
+               
             </div>
+            <div class="col-md-9" id="result" style="width: 93%;margin-left: 1.15%">
+                </div>
         </div>
+        
     </div>
+    
 <script>
     function checkLeave() {
         var msg = "Bạn đang làm bài thi có chắc bạn muốn rời khỏi trang này";
@@ -63,10 +73,13 @@
 </script>
 <style>
     .ClockForExam{
-        width: 30%;
+        width: 40%;
         background: green;
         border-radius: 45%;
         text-align: center;
+    }
+    #result{
+        text-align: left;
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
