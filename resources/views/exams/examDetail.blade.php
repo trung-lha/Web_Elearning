@@ -15,15 +15,15 @@
                                     @foreach ($listQuestions as $key => $question)
                                     <label for="{{ $key + 1 }}">Câu hỏi {{ $key + 1 }}: </label><br>
                                     <span>
-                                        <strong id="{{'highLight'.($key+1)}}">{{ $question->question }}</strong>
+                                        <strong name="{{'highLight'.($key+1)}}">{{ $question->question }}</strong>
                                     </span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="1" />
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="1" onclick="highLightQuestion({{ 'question' . ($key + 1) }})"/>
                                     <span id="{{ 'question' . ($key + 1) . 1}}"> A. {{ $question->answer_a }}</span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="2" />
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="2" onclick="highLightQuestion({{ 'question' . ($key + 1) }})"/>
                                     <span id="{{ 'question' . ($key + 1) . 2}}"> B. {{ $question->answer_b }}</span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="3" />
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="3" onclick="highLightQuestion({{ 'question' . ($key + 1) }})"/>
                                     <span id="{{ 'question' . ($key + 1) . 3}}"> C. {{ $question->answer_c }}</span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="4" />
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="4" onclick="highLightQuestion({{ 'question' . ($key + 1) }})"/>
                                     <span id="{{ 'question' . ($key + 1) . 4}}"> D. {{ $question->answer_d
                                         }}</span><br><br>
 
@@ -42,7 +42,10 @@
                             </div>
                             {{-- Handle Timer in clock --}}
                             <script>
-
+                                function highLightQuestion(index) {
+                                    console.log(index);
+                                    document.getElementById("questionScroll1").style.color = "blue";
+                                }
                                 function startTimer(duration, display) {
                                     var timer = duration,
                                         minutes, seconds;
@@ -180,16 +183,8 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function highLightQuestion() {
-        var checkedQues = document.getElementById("hightLight1");
-        if(checkedQues){
-            console.log("fawehfoah");
-        }
-    }
+    
 
-    $(document).ready(function()
-    {   
-        highLightQuestion();
-    });
+    //window.onload = highLightQuestion;
 </script>
 @endsection
