@@ -4,7 +4,7 @@
         <h2 style="margin-left:360px ">Bắt đầu làm bài thi</h2>
         <div class="row" style="margin-bottom: 10px">
             <div class="col-12 col-md-offset-1">
-                {{-- <div class="row row-pb-lg"> --}}
+                <div class="row row-pb-lg">
                     <div class="col-md-8 animate-box">
                         <div class="classes class-single" style="border: 1px solid black">
                             <div class="desc desc2" id="formQuestion">
@@ -17,13 +17,13 @@
                                     <span>
                                         <strong name="{{'highLight'.($key+1)}}">{{ $question->question }}</strong>
                                     </span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="1" onclick="highLightQuestion({{ 'question' . ($key + 1) }})"/>
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="1" onclick="highLightQuestion('{{ 'question' . ($key + 1) }}')"/>
                                     <span id="{{ 'question' . ($key + 1) . 1}}"> A. {{ $question->answer_a }}</span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="2" onclick="highLightQuestion({{ 'question' . ($key + 1) }})"/>
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="2" onclick="highLightQuestion('{{ 'question' . ($key + 1) }}')"/>
                                     <span id="{{ 'question' . ($key + 1) . 2}}"> B. {{ $question->answer_b }}</span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="3" onclick="highLightQuestion({{ 'question' . ($key + 1) }})"/>
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="3" onclick="highLightQuestion('{{ 'question' . ($key + 1) }}')"/>
                                     <span id="{{ 'question' . ($key + 1) . 3}}"> C. {{ $question->answer_c }}</span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="4" onclick="highLightQuestion({{ 'question' . ($key + 1) }})"/>
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="4" onclick="highLightQuestion('{{ 'question' . ($key + 1) }}')"/>
                                     <span id="{{ 'question' . ($key + 1) . 4}}"> D. {{ $question->answer_d
                                         }}</span><br><br>
 
@@ -33,8 +33,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4" style="position: fixed; right: 0%">
-                        <div class="row">
+                    <div class="col-md-4" style="position: fixed; right: 0%" id="boxHighLight">
+                        <div class="row" >
                             <div class="col-md-4">
                             </div>
                             <div class="col-md-4 ClockForExam">
@@ -43,8 +43,13 @@
                             {{-- Handle Timer in clock --}}
                             <script>
                                 function highLightQuestion(index) {
-                                    console.log(index);
-                                    document.getElementById("questionScroll1").style.color = "blue";
+                                    var num = <?php echo $count ?>;
+                                    for(var i=0;i<num;i++){
+                                        str = "question"+(i+1);
+                                        if(index.localeCompare(str) == 0){
+                                            document.getElementById("questionScroll"+(i+1)).style.color = "blue";
+                                        }
+                                    }
                                 }
                                 function startTimer(duration, display) {
                                     var timer = duration,
@@ -109,6 +114,7 @@
                                                                 clearTimeout(timeout);
                                                                 document.getElementById("submitExam").disabled = true;
                                                                 document.getElementById("formQuestion").disabled = true;
+                                                                document.getElementById("boxHighLight").style.display = "none";
                                                                 $("#result").html(result.data.xhtml);
 
                                                                 // highlight form answer after submit
@@ -151,7 +157,6 @@
                                         display = document.querySelector('#time');
                                     startTimer(timer, display);
                                 };
-
                             </script>
                         </div>
                         <div class="row" style="margin-top: 50px">
@@ -161,7 +166,7 @@
                         </div>
                     </div>
                     
-                {{-- </div> --}}
+                </div>
                 <div class="row row-pb-lg" id="result" style="width: 100%">
                 </div>
             </div>
