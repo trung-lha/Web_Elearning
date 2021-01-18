@@ -1,5 +1,7 @@
 <!-- jQuery -->
-<script src="{{asset('admin_page/js/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{asset('web_page/js/jquery.min.js')}}"></script>
+<script src="{{asset('web_page/js/jquery.easing.1.3.js')}}"></script>
+{{-- <script src="{{asset('admin_page/js/jquery/dist/jquery.min.js')}}"></script> --}}
 <!-- Bootstrap -->
 <script src="{{asset('admin_page/asset/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- FastClick -->
