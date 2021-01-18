@@ -77,15 +77,15 @@
     $(document).ready(function() {
         $('#filter-follow-sub').on('change',() =>{
             var selectedSubject = $("#filter-follow-sub option:selected").val();
-            console.log(selectedSubject);
+            
             $.ajax({
-                url:"{{route('filterQuestion')}}",
-                method:"get",
+                url:"{{route('test')}}",
+                type:"get",
                 dataType: "json",
-                cache: false,
                 data:{'selectedSubject': selectedSubject},
                 success:function(response) {
-                    console.log(response.success);
+                    console.log(response);
+                    $('#main-table').html(response.tableData);
                 }
             });
         })

@@ -59,7 +59,6 @@ class ExamAdminController extends Controller
         // }
         return response()->json([
             'success' => "Nộp bài thành công!",
-            
         ], 200);
     }
 }
