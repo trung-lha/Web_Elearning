@@ -1,11 +1,15 @@
 @extends('layouts.main')
 @section('content')
+
     <div class="container" id="kh_bv">
+        <div style="height: 100px">
+            <img src="{{asset('images/exam/galweb-banner.jpg')}}" style="height: 100%;width: 100%; object-fit: none" alt="banner">
+            </div>
         <h2 style="margin-left:360px ">Bắt đầu làm bài thi</h2>
         <div class="row" style="margin-bottom: 10px">
             <div class="col-12 col-md-offset-1">
-                {{-- <div class="row row-pb-lg"> --}}
-                    <div class="col-md-8 animate-box">
+                <div class="row row-pb-lg">
+                    <div class="col-md-8 animate-box" style="margin-left: 17px">
                         <div class="classes class-single" style="border: 1px solid black">
                             <div class="desc desc2" id="formQuestion">
                                 <form id="main-form" method="get" enctype="multipart/form-data"
@@ -15,15 +19,15 @@
                                     @foreach ($listQuestions as $key => $question)
                                     <label for="{{ $key + 1 }}">Câu hỏi {{ $key + 1 }}: </label><br>
                                     <span>
-                                        <strong id="{{'highLight'.($key+1)}}">{{ $question->question }}</strong>
+                                        <strong name="{{'highLight'.($key+1)}}">{{ $question->question }}</strong>
                                     </span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="1" />
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="1" onclick="highLightQuestion('{{ 'question' . ($key + 1) }}')"/>
                                     <span id="{{ 'question' . ($key + 1) . 1}}"> A. {{ $question->answer_a }}</span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="2" />
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="2" onclick="highLightQuestion('{{ 'question' . ($key + 1) }}')"/>
                                     <span id="{{ 'question' . ($key + 1) . 2}}"> B. {{ $question->answer_b }}</span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="3" />
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="3" onclick="highLightQuestion('{{ 'question' . ($key + 1) }}')"/>
                                     <span id="{{ 'question' . ($key + 1) . 3}}"> C. {{ $question->answer_c }}</span><br>
-                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="4" />
+                                    <input name="{{ 'question' . ($key + 1) }}" type="radio" value="4" onclick="highLightQuestion('{{ 'question' . ($key + 1) }}')"/>
                                     <span id="{{ 'question' . ($key + 1) . 4}}"> D. {{ $question->answer_d
                                         }}</span><br><br>
 
@@ -33,8 +37,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4" style="position: fixed; right: 0%">
-                        <div class="row">
+                    <div class="col-md-3" style="position: fixed; right: 0%; border-style: solid; border-radius:15px; background-color: white" id="boxHighLight">
+                        <div class="row" >
                             <div class="col-md-4">
                             </div>
                             <div class="col-md-4 ClockForExam">
@@ -42,7 +46,15 @@
                             </div>
                             {{-- Handle Timer in clock --}}
                             <script>
-
+                                function highLightQuestion(index) {
+                                    var num = <?php echo $count ?>;
+                                    for(var i=0;i<num;i++){
+                                        str = "question"+(i+1);
+                                        if(index.localeCompare(str) == 0){
+                                            document.getElementById("questionScroll"+(i+1)).style.color = "blue";
+                                        }
+                                    }
+                                }
                                 function startTimer(duration, display) {
                                     var timer = duration,
                                         minutes, seconds;
@@ -106,6 +118,7 @@
                                                                 clearTimeout(timeout);
                                                                 document.getElementById("submitExam").disabled = true;
                                                                 document.getElementById("formQuestion").disabled = true;
+                                                                document.getElementById("boxHighLight").style.display = "none";
                                                                 $("#result").html(result.data.xhtml);
 
                                                                 // highlight form answer after submit
@@ -148,22 +161,24 @@
                                         display = document.querySelector('#time');
                                     startTimer(timer, display);
                                 };
-
                             </script>
                         </div>
                         <div class="row" style="margin-top: 50px">
                             @for ($i=1; $i <= $count; $i++)
-                                <span class="col-md-3" id="{{ 'questionScroll' . ($i)}}"style="margin-bottom: 10px">Câu {{$i}}</span>
+                                <span class="col-md-3" id="{{ 'questionScroll' . ($i)}}"style="margin-bottom: 10px; font-weight: bold; color:black">Câu {{$i}}</span>
                             @endfor
                         </div>
                     </div>
                     
-                {{-- </div> --}}
-                <div class="row row-pb-lg" id="result" style="width: 100%">
                 </div>
+               
             </div>
+            <div class="col-md-9" id="result" style="width: 93%;margin-left: 1.15%">
+                </div>
         </div>
+        
     </div>
+    
 <script>
     function checkLeave() {
         var msg = "Bạn đang làm bài thi có chắc bạn muốn rời khỏi trang này";
@@ -172,24 +187,19 @@
 </script>
 <style>
     .ClockForExam{
-        width: 30%;
+        width: 40%;
         background: green;
         border-radius: 45%;
         text-align: center;
     }
+    #result{
+        text-align: left;
+    }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function highLightQuestion() {
-        var checkedQues = document.getElementById("hightLight1");
-        if(checkedQues){
-            console.log("fawehfoah");
-        }
-    }
+    
 
-    $(document).ready(function()
-    {   
-        highLightQuestion();
-    });
+    //window.onload = highLightQuestion;
 </script>
 @endsection
