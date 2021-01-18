@@ -21,12 +21,12 @@ class AdminController extends Controller
         return view('admin.post.form',compact('listPosts'));
     }
 
-    public function examAdmin(){
+    public function examAdmin(Request $request){
         
         $ques = new QuestionModel();
-        $listQuestions = $ques->getQuestionForAdmin();
-        
-        return view('admin.exam.form',compact('listQuestions'));
+        $listQuestions = $ques->getQuestionForAdmin($request->selectedSubject);
+        $listSubject = DB::table('subject')->get();
+        return view('admin.exam.form',compact('listQuestions','listSubject'));
     }
 
     public function userAdmin(){

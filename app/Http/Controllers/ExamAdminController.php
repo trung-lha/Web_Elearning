@@ -26,4 +26,39 @@ class ExamAdminController extends Controller
                 'updated_at' => now()]);
         return redirect()->action('AdminController@examAdmin');
     }
+
+    public function filterQuestion(Request $request){
+        //$ques = new QuestionModel();
+        //$listQuestions = $ques->getQuestionForAdmin($request->selectedSubject);
+        // $listSubject = DB::table('subject')->get();
+        //echo $request->selectedSubject;
+        // $records = count($listQuestions->toArray());
+        // $xhtml='';
+        // if($records){
+        //     foreach ($listQuestions as $key=>$question){
+        //         $xhtml = \sprintf(
+        //         '<tr>
+        //             <td style="width: 2%;">{{$key+1}}</td>
+        //             <td style="width: 39%;">{{$question->question}}</td>
+        //             <td style="width: 10%;">{{$question->exam_name}}</td>
+        //             <td style="width: 10%;">{{$question->subject_name}}</td>
+        //             <td style="width: 13%;">{{$question->created_at}}</td>
+        //             <td style="width: 13%;">{{$question->updated_at}}</td>
+        //             <td style="width: 13%;">
+        //                 <a href="{{Route(%s,$question->id)}}"><button
+        //                         class="btn btn-success">Sửa</button></a>
+        //                 <a onclick="return confirm(%s)" href=""><button
+        //                         class="btn btn-dark">Xóa</button>
+        //                 </a>
+        //             </td>
+        //         </tr>',"'showQuestion'","'Bạn có chắc muốn xóa bài viết này không?'");
+        //     }
+        // }
+        // else{
+        //     $xhtml .= '<tr><td colspan="5" align="center">No record found.</td></tr>';
+        // }
+        return response()->json([
+            'success' => "Nộp bài thành công!",
+        ], 200);
+    }
 }
