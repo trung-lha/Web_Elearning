@@ -1,17 +1,33 @@
 @extends('layouts.main')
 @section('content')
+<?php $count = count($listQuestions); ?>
+<div class="col-md-3" style="position: sticky; top: 40px;right: 0" id="boxHighLight">
+    <div class="row" >
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4 ClockForExam">
+            <span id="time" style="font-size: 30px; color : black;">90:00</span>
+        </div>
+        
+    </div>
+    <div class="row" style="margin-top: 50px">
+        @for ($i=1; $i <= $count; $i++)
+            <span class="col-md-3" id="{{ 'questionScroll' . ($i)}}"style="margin-bottom: 10px">Câu {{$i}}</span>
+        @endfor
+    </div>
+</div>
     <div class="container" id="kh_bv">
         <h2 style="margin-left:360px ">Bắt đầu làm bài thi</h2>
-        <div class="row" style="margin-bottom: 10px">
-            <div class="col-12 col-md-offset-1">
+        <div class="row" style="margin-bottom: 40px" style="float: right">
+            <div class="col-9 col-md-offset-1">
                 <div class="row row-pb-lg">
-                    <div class="col-md-8 animate-box">
+                    <div class="col-md-9 animate-box">
                         <div class="classes class-single" style="border: 1px solid black">
                             <div class="desc desc2" id="formQuestion">
                                 <form id="main-form" method="get" enctype="multipart/form-data"
                                     action="{{ route('processExam') }}">
                                     <input type="hidden" value="exam1">
-                                    <?php $count = count($listQuestions); ?>
+                                    
                                     @foreach ($listQuestions as $key => $question)
                                     <label for="{{ $key + 1 }}">Câu hỏi {{ $key + 1 }}: </label><br>
                                     <span>
@@ -32,140 +48,7 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4" style="position: fixed; right: 0%" id="boxHighLight">
-                        <div class="row" >
-                            <div class="col-md-4">
-                            </div>
-                            <div class="col-md-4 ClockForExam">
-                                <span id="time" style="font-size: 40px; color : black;">90:00</span>
-                            </div>
-                            {{-- Handle Timer in clock --}}
-                            <script>
-                                function highLightQuestion(index) {
-                                    var num = <?php echo $count ?>;
-                                    for(var i=0;i<num;i++){
-                                        str = "question"+(i+1);
-                                        if(index.localeCompare(str) == 0){
-                                            document.getElementById("questionScroll"+(i+1)).style.color = "blue";
-                                        }
-                                    }
-                                }
-                                function startTimer(duration, display) {
-                                    var timer = duration,
-                                        minutes, seconds;
-                                    // Countdown clock: 
-                                    var timeInterval = setInterval(() => {
-                                        minutes = parseInt(timer / 60, 10)
-                                        seconds = parseInt(timer % 60, 10);
-                                        minutes = minutes < 10 ? "0" + minutes : minutes;
-                                        seconds = seconds < 10 ? "0" + seconds : seconds;
-                                        $("#time").html(minutes + ":" + seconds);
-                                        timer--;
-                                    }, 1000);
-
-                                    // Set timeout: 
-                                    var timeout = setTimeout(() => {
-                                        clearInterval(timeInterval);
-                                        var timeView = duration - timer - 1;
-                                        minutes = parseInt(timeView / 60, 10);
-                                        seconds = parseInt(timeView % 60, 10);
-                                        minutes = minutes < 10 ? "0" + minutes : minutes;
-                                        seconds = seconds < 10 ? "0" + seconds : seconds;
-                                        var result = minutes + ":" + seconds
-
-                                    }, duration * 1000 + 1000);
-
-                                    $("#submitExam").click(function (e) {
-                                        var timeView = duration - timer - 1;
-                                        minutes = parseInt(timeView / 60, 10);
-                                        seconds = parseInt(timeView % 60, 10);
-                                        minutes = minutes < 10 ? "0" + minutes : minutes;
-                                        seconds = seconds < 10 ? "0" + seconds : seconds;
-                                        var result = minutes + ":" + seconds;
-                                        var idExam = "{{ $listQuestions[0]->exam_id }}";
-                                        swal({
-                                            title: "Bạn muốn nộp bài?",
-                                            icon: "warning",
-                                            buttons: true,
-                                            dangerMode: true,
-                                        })
-                                            .then((willSubmit) => {
-                                                if (willSubmit) {
-                                                    // console.log($("#main-form").serializeArray());
-                                                    $.ajax({
-                                                        url: "{{ route('processExam') }}",
-                                                        method: "get",
-                                                        dataType: "Json",
-                                                        data: {
-                                                            time: result,
-                                                            id: idExam,
-                                                            arr: $("#main-form").serializeArray(),
-                                                        },
-                                                        success: function (result) {
-                                                            if ($.isEmptyObject(result.error)) {
-                                                                swal({
-                                                                    title: "Nộp bài thành công!",
-                                                                    text: "Xem kết quả cuối trang",
-                                                                    icon: "success",
-                                                                    button: "OK",
-                                                                });
-                                                                clearInterval(timeInterval);
-                                                                clearTimeout(timeout);
-                                                                document.getElementById("submitExam").disabled = true;
-                                                                document.getElementById("formQuestion").disabled = true;
-                                                                document.getElementById("boxHighLight").style.display = "none";
-                                                                $("#result").html(result.data.xhtml);
-
-                                                                // highlight form answer after submit
-                                                                var highLight = result.data.correct;
-                                                                var highLightTrue = result.data.selectedAnswer;
-                                                                for (var i = 0; i < result.data.countSelected; i++) {
-                                                                    highLight[i]['correct_answer'] = "question" + (i + 1) + highLight[i]['correct_answer'];
-                                                                    highLightTrue[i] = "question" + (i + 1) + highLightTrue[i];
-                                                                }
-                                                                for (var i = 0; i < result.data.countSelected; i++) {
-                                                                    console.log(highLight[i]['correct_answer']);
-
-                                                                    if (highLightTrue[i] == highLight[i]['correct_answer']) {
-                                                                        document.getElementById(highLight[i]['correct_answer']).style.color = "green";
-                                                                    } else {
-                                                                        document.getElementById(highLight[i]['correct_answer']).style.color = "red";
-                                                                    }
-                                                                    document.getElementsByName("question" + (i + 1)).forEach((e) => {
-                                                                        e.disabled = true;
-                                                                    });
-                                                                }
-                                                            } else {
-                                                                swal(result.error, {
-                                                                    icon: "warning",
-                                                                });
-                                                            }
-                                                        }
-                                                    });
-
-                                                } else {
-                                                    // swal("Your imaginary file is safe!");
-                                                }
-                                            });
-                                        // Block submit form:
-                                        e.preventDefault();
-                                    });
-                                };
-                                window.onload = function () {
-                                    var timer = 60 * 90,
-                                        display = document.querySelector('#time');
-                                    startTimer(timer, display);
-                                };
-                            </script>
-                        </div>
-                        <div class="row" style="margin-top: 50px">
-                            @for ($i=1; $i <= $count; $i++)
-                                <span class="col-md-3" id="{{ 'questionScroll' . ($i)}}"style="margin-bottom: 10px">Câu {{$i}}</span>
-                            @endfor
-                        </div>
-                    </div>
-                    
+                    </div>  
                 </div>
                 <div class="row row-pb-lg" id="result" style="width: 100%">
                 </div>
@@ -187,9 +70,122 @@
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{{-- Handle Timer in clock --}}
 <script>
-    
+    function highLightQuestion(index) {
+        var num = <?php echo $count ?>;
+        for(var i=0;i<num;i++){
+            str = "question"+(i+1);
+            if(index.localeCompare(str) == 0){
+                document.getElementById("questionScroll"+(i+1)).style.color = "blue";
+            }
+        }
+    }
+    function startTimer(duration, display) {
+        var timer = duration,
+            minutes, seconds;
+        // Countdown clock: 
+        var timeInterval = setInterval(() => {
+            minutes = parseInt(timer / 60, 10)
+            seconds = parseInt(timer % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            $("#time").html(minutes + ":" + seconds);
+            timer--;
+        }, 1000);
 
-    //window.onload = highLightQuestion;
+        // Set timeout: 
+        var timeout = setTimeout(() => {
+            clearInterval(timeInterval);
+            var timeView = duration - timer - 1;
+            minutes = parseInt(timeView / 60, 10);
+            seconds = parseInt(timeView % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            var result = minutes + ":" + seconds
+
+        }, duration * 1000 + 1000);
+
+        $("#submitExam").click(function (e) {
+            var timeView = duration - timer - 1;
+            minutes = parseInt(timeView / 60, 10);
+            seconds = parseInt(timeView % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            var result = minutes + ":" + seconds;
+            var idExam = "{{ $listQuestions[0]->exam_id }}";
+            swal({
+                title: "Bạn muốn nộp bài?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willSubmit) => {
+                    if (willSubmit) {
+                        // console.log($("#main-form").serializeArray());
+                        $.ajax({
+                            url: "{{ route('processExam') }}",
+                            method: "get",
+                            dataType: "Json",
+                            data: {
+                                time: result,
+                                id: idExam,
+                                arr: $("#main-form").serializeArray(),
+                            },
+                            success: function (result) {
+                                if ($.isEmptyObject(result.error)) {
+                                    swal({
+                                        title: "Nộp bài thành công!",
+                                        text: "Xem kết quả cuối trang",
+                                        icon: "success",
+                                        button: "OK",
+                                    });
+                                    clearInterval(timeInterval);
+                                    clearTimeout(timeout);
+                                    document.getElementById("submitExam").disabled = true;
+                                    document.getElementById("formQuestion").disabled = true;
+                                    document.getElementById("boxHighLight").style.display = "none";
+                                    $("#result").html(result.data.xhtml);
+
+                                    // highlight form answer after submit
+                                    var highLight = result.data.correct;
+                                    var highLightTrue = result.data.selectedAnswer;
+                                    for (var i = 0; i < result.data.countSelected; i++) {
+                                        highLight[i]['correct_answer'] = "question" + (i + 1) + highLight[i]['correct_answer'];
+                                        highLightTrue[i] = "question" + (i + 1) + highLightTrue[i];
+                                    }
+                                    for (var i = 0; i < result.data.countSelected; i++) {
+                                        console.log(highLight[i]['correct_answer']);
+
+                                        if (highLightTrue[i] == highLight[i]['correct_answer']) {
+                                            document.getElementById(highLight[i]['correct_answer']).style.color = "green";
+                                        } else {
+                                            document.getElementById(highLight[i]['correct_answer']).style.color = "red";
+                                        }
+                                        document.getElementsByName("question" + (i + 1)).forEach((e) => {
+                                            e.disabled = true;
+                                        });
+                                    }
+                                } else {
+                                    swal(result.error, {
+                                        icon: "warning",
+                                    });
+                                }
+                            }
+                        });
+
+                    } else {
+                        // swal("Your imaginary file is safe!");
+                    }
+                });
+            // Block submit form:
+            e.preventDefault();
+        });
+    };
+    window.onload = function () {
+        var timer = 60 * 90,
+            display = document.querySelector('#time');
+        startTimer(timer, display);
+    };
 </script>
 @endsection

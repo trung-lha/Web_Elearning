@@ -31,6 +31,7 @@ class AdminController extends Controller
 
     public function userAdmin(){
         $users = DB::table('users')
+        ->where('users.role_id','=',2)
         ->paginate(10);
         return view('admin.users.form',compact('users'));
     }
