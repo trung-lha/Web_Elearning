@@ -6,7 +6,7 @@
         <h3>Exams Management</h3>
     </div>
     <div class="zvn-add-new pull-right">
-        <a href="" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>
+        <a href="{{Route('showListExam')}}" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>
     </div>
 </div>
 
@@ -42,7 +42,7 @@
                         </tr>
                     </tfoot>
                     <tbody id="main-table">
-                        {{-- @foreach ($listQuestions as $key=>$question)
+                        @foreach ($listQuestions as $key=>$question)
                         <tr>
                             <td style="width: 2%;">{{$key+1}}</td>
                             <td style="width: 39%;">{{$question->question}}</td>
@@ -58,7 +58,7 @@
                                 </a>
                             </td>
                         </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -14,6 +14,14 @@ class ExamAdminController extends Controller
         return view('admin.exam.editQuestion',compact('questionForEdit'));
     }
 
+    public function showListExam(){
+        $listExam = DB::table('exam')
+        ->join('subject','subject.id','=','exam.subject_id')
+        ->select('exam.id as id','subject.name as nameSub','exam.name as examName')
+        ->paginate(10);
+        // ->get()
+        return view('admin.exam.listExam',compact("listExam"));
+    }
     public function editQuestion(Request $request){
         
         QuestionModel::where('id',$request->question_id)
@@ -24,6 +32,26 @@ class ExamAdminController extends Controller
                 'answer_d' => $request->answer_d,
                 'correct_answer' =>$request->correct_answer,
                 'updated_at' => now()]);
+        return redirect()->action('AdminController@examAdmin');
+    }
+
+    public function addQuestion(Request $request){
+        $exam_id = $request->exam_id;
+        return view('admin.exam.addQuestion',compact('exam_id'));
+    }
+    public function addQuestion2(Request $request){
+        
+        // dd($request->all());
+        $questionToAdd = ['question' => $request->question,
+            'answer_a' => $request->answer_a,
+            'answer_b' => $request->answer_b,
+            'answer_c' => $request->answer_c,
+            'answer_d' => $request->answer_d,
+            'correct_answer' =>$request->correct_answer,
+            'level' => $request->level,
+            'exam_id' => $request->examID,
+            'updated_at' => now()];
+        DB::table('question')->insert($questionToAdd);
         return redirect()->action('AdminController@examAdmin');
     }
 

@@ -71,5 +71,8 @@ Route::prefix('admin')->group(function(){
     Route::post('/question/edit','ExamAdminController@editQuestion')->name('editQuestion');
     Route::get('/question/filter','ExamAdminController@filterQuestion')->name('filterQuestion');
     Route::get('/test','test@index')->name('test');
+    Route::get('/question-addForm/{exam_id}','ExamAdminController@addQuestion')->name('addQuestion');
+    Route::post('/question-addForm-submit','ExamAdminController@addQuestion2')->name('addQuestion2');
+    Route::get('/show-list-exam','ExamAdminController@showListExam')->name('showListExam');
 });
 
