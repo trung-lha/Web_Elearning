@@ -42,6 +42,7 @@ Route::prefix('users')->group(function() {
     Route::get('/subject/{subject_id}/exam/{exam_id}','SubjectController@examDetail')->middleware('UserRole')->name('examDetail');
     Route::get('/info','HomeController@showInfo')->middleware('UserRole')->name('showInfo');
     Route::get('/process-exam','ProcessExamController@handleExam')->middleware('UserRole')->name("processExam");
+    Route::get('/process-exam-timeout','ProcessExamTimeOutController@handleExam')->middleware('UserRole')->name("processExamTimeOut");
     Route::get('/subject/{subject_id}/post','SubjectController@showPost')->name('showPost');
     Route::get('/subject/{subject_id}/post/{post_id}','SubjectController@postDetail')->name('postDetail');
     Route::post('info/edit','UserController@userEditInfo')->middleware('UserRole')->name('userEditInfo');
