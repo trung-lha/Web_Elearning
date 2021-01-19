@@ -14,7 +14,7 @@ class AddTableQuestion extends Migration
     public function up()
     {
         Schema::table('question', function (Blueprint $table) {
-            $table->integer('level');
+            $table->integer('level')->default(1);
             $table->string('imageQuestion')->nullable();
         });
     }
