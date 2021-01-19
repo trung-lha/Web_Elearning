@@ -21,9 +21,9 @@
                             <p style="margin-top: 0px;"><img class="ava-image"
                                 src="{{asset('storage/images/'.Auth::user()->avatar)}}" alt="avatar" style="width: 50%"></p>
                                 <br>
-                                <div style="margin-left: 80px ">
-                                    <input name="avatar" type="file">
-                                </div>
+                                {{-- <div style="margin-left: 80px ">
+                                    
+                                </div> --}}
                             </div>
                         
                         {{-- <div class="info">
@@ -49,7 +49,7 @@
                             <input class="form-control" placeholder="Nhập Email" required="required" style="height:50px"
                                 name="email" type="email" value="{{$info[0]->email}}">
                             <br>
-                            
+                                <input name="avatar" type="file">   
                             <br>
                             <input class="btn btn-primary" type="submit" value="Xác nhận">
                         </form>

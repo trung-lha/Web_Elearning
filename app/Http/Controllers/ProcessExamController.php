@@ -14,8 +14,10 @@ class ProcessExamController extends Controller
         // Get request from ajax
         $data = $request->all();
         // Get data from database --> array quesiton
-        $correct_answer = QuestionModel::where('exam_id','=', (int)$data['id'])
-                                        ->select('correct_answer')->get();
+        $correct_answer = DB::table('question')
+        ->where('exam_id','=',(int)$data['id'])
+        ->select('correct_answer')
+        ->get();
 
         $count = count($correct_answer->toArray());
         $mark = 0;
